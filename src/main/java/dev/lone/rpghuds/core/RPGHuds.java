@@ -38,7 +38,7 @@ public class RPGHuds {
     private boolean allPlayersInitialized;
 
     //TODO: recode this shit. Very dirty
-    private final List<String> hudsNames = List.of("rpghuds:money", "rpghuds:compass", "rpghuds:quiver", "rpghuds:arrow_target");
+    private final List<String> hudsNames = List.of("rpghuds:money", "rpghuds:compass");
 
 
     public RPGHuds(Main plugin) {

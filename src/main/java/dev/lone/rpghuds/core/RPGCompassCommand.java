@@ -7,7 +7,6 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import dev.lone.rpghuds.Main;
-import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.data.CompassHud;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,7 +17,7 @@ import org.bukkit.command.CommandSender;
  */
 @CommandAlias("rpgcompass")
 public class RPGCompassCommand extends BaseCommand {
-    private final String compassId = "rpghuds:compass";
+    private static final String COMPASS_ID = "rpghuds:compass";
 
     @Subcommand("set")
     @CommandPermission("rpghuds.compass.set")
@@ -26,7 +25,7 @@ public class RPGCompassCommand extends BaseCommand {
     public void onSet(final CommandSender sender, final OnlinePlayer player, final World world, final int x, final int y, final int z) {
         Location location = new Location(world, x, y, z);
 
-        CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), compassId);
+        CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), COMPASS_ID);
         if (hud == null) {
             sender.sendMessage(Main.settings.msgHudNotFound);
             return;
@@ -39,7 +38,7 @@ public class RPGCompassCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("rpghuds.compass.remove")
     public void onRemove(final CommandSender sender, final OnlinePlayer player) {
-        CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), compassId);
+        CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), COMPASS_ID);
         if (hud == null) {
             sender.sendMessage(Main.settings.msgHudNotFound);
             return;
