@@ -61,6 +61,8 @@ types:
     char_arrow_up: "rpghuds:money_char_arrow_up"
     char_arrow_down: "rpghuds:money_char_arrow_down"
   compass:
+    reached: "reached"
+    diff_world: "diff_world"
     0: "16"
     1: "15"
     2: "14"
