@@ -87,7 +87,6 @@ public class RPGHuds {
         PlayerData playerData;
         try {
             playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
-
             //TODO: recode this shit. Very dirty
             if (Main.settings.moneyEnabled) {
                 playerData.registerHud(new MoneyHud(

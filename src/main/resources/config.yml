@@ -1,21 +1,65 @@
 huds_refresh_interval_ticks: 15
 huds_high_frequency_refresh_interval_ticks: 1
-money:
-  enabled: true
-  offset: 88
-  # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
-  papi_placeholder: "%vault_eco_balance_formatted%"
-  worlds:
-    - world
-    - world_nether
-    - world_the_end
-compass:
-  enabled: true
-  offset: 6
-  worlds:
-    - world
-    - world_nether
-    - world_the_end
+
+huds:
+  - money:
+      type: money
+      enabled: true
+      offset: 90
+      # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
+      papi_placeholder: "%vault_eco_balance_formatted%"
+      worlds:
+        - world
+        - world_nether
+        - world_the_end
+      settings:
+        name_spaced_id: "rpghuds:money"
+        icon: "rpghuds:money_icon"
+  - cosmetic_coins:
+      type: money
+      enabled: true
+      offset: 30
+      # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
+      papi_placeholder: "%vault_eco_balance_formatted%"
+      worlds:
+        - world
+        - world_nether
+        - world_the_end
+      settings:
+        name_spaced_id: "rpghuds:cosmetic_coin"
+        icon: "rpghuds:cosmetic_icon"
+  - compass:
+      type: compass
+      enabled: false
+      offset: 6
+      worlds:
+        - world
+        - world_nether
+        - world_the_end
+      settings:
+        name_spaced_id: "rpghuds:compass"
+        compass_prefix: "rpghuds:hud_compass_"
+types:
+  money:
+    digit_0: "rpghuds:money_digit_0"
+    digit_1: "rpghuds:money_digit_1"
+    digit_2: "rpghuds:money_digit_2"
+    digit_3: "rpghuds:money_digit_3"
+    digit_4: "rpghuds:money_digit_4"
+    digit_5: "rpghuds:money_digit_5"
+    digit_6: "rpghuds:money_digit_6"
+    digit_7: "rpghuds:money_digit_7"
+    digit_8: "rpghuds:money_digit_8"
+    digit_9: "rpghuds:money_digit_9"
+    char_unknown: "rpghuds:money_char_unknown"
+    char_k: "rpghuds:money_char_k"
+    char_m: "rpghuds:money_char_m"
+    char_b: "rpghuds:money_char_b"
+    char_t: "rpghuds:money_char_t"
+    char_dot: "rpghuds:money_char_dot"
+    char_comma: "rpghuds:money_char_comma"
+    char_arrow_up: "rpghuds:money_char_arrow_up"
+    char_arrow_down: "rpghuds:money_char_arrow_down"
 lang:
   hud_not_found: "&6Hud not found!"
   wrong_usage: "&cWrong command usage."
