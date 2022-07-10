@@ -132,59 +132,7 @@ public class RPGHuds {
                         )
                 ), true);
             }
-
-            //TODO: recode this shit. Very dirty
-            if (Main.settings.quiverEnabled) {
-                playerData.registerHud(new QuiverHud(
-                        playerData.getHolder(),
-                        new QuiverSettings(
-                                "rpghuds:quiver",
-                                "rpghuds:quiver",
-                                "rpghuds:quiver_half",
-                                "rpghuds:quiver_empty",
-                                "rpghuds:quiver_digit_0",
-                                "rpghuds:quiver_digit_1",
-                                "rpghuds:quiver_digit_2",
-                                "rpghuds:quiver_digit_3",
-                                "rpghuds:quiver_digit_4",
-                                "rpghuds:quiver_digit_5",
-                                "rpghuds:quiver_digit_6",
-                                "rpghuds:quiver_digit_7",
-                                "rpghuds:quiver_digit_8",
-                                "rpghuds:quiver_digit_9",
-                                "rpghuds:quiver_char_unknown",
-                                Main.settings.quiverOffset,
-                                Main.settings.quiverOffsetWhenOffhandShown,
-                                Main.settings.quiverWorlds
-                        )
-                ), false);
-            }
-
-            //TODO: recode this shit. Very dirty
-            if (Main.settings.quiverEnabled) {
-                playerData.registerHud(new ArrowTargetHud(
-                        playerData.getHolder(),
-                        new ArrowTargetSettings(
-                                "rpghuds:arrow_target",
-                                "rpghuds:arrow_target",
-                                "rpghuds:arrow_target_digit_0",
-                                "rpghuds:arrow_target_digit_1",
-                                "rpghuds:arrow_target_digit_2",
-                                "rpghuds:arrow_target_digit_3",
-                                "rpghuds:arrow_target_digit_4",
-                                "rpghuds:arrow_target_digit_5",
-                                "rpghuds:arrow_target_digit_6",
-                                "rpghuds:arrow_target_digit_7",
-                                "rpghuds:arrow_target_digit_8",
-                                "rpghuds:arrow_target_digit_9",
-                                "rpghuds:arrow_target_char_unknown",
-                                "rpghuds:arrow_target_char_percentage",
-                                Main.settings.arrowTargetOffset,
-                                Main.settings.arrowTargetWorlds
-                        )
-                ), false);
-            }
-
+            
             datasByPlayer.put(player, playerData);
             datas.add(playerData);
         } catch (NullPointerException exc) {
