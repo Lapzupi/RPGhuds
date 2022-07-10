@@ -1,5 +1,5 @@
-name: RPGhuds
-version: 1.1.0
+name: ${project.name}
+version: ${project.version}
 main: dev.lone.rpghuds.Main
 api-version: 1.13
 depend:
