@@ -8,25 +8,21 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
-public class ItemsAdderLoadListener implements Listener
-{
+public class ItemsAdderLoadListener implements Listener {
     private final Plugin plugin;
     private final RPGHuds rpgHuds;
 
-    ItemsAdderLoadListener(Plugin plugin, RPGHuds rpgHuds)
-    {
+    ItemsAdderLoadListener(Plugin plugin, RPGHuds rpgHuds) {
         this.plugin = plugin;
         this.rpgHuds = rpgHuds;
     }
 
-    public void registerListener()
-    {
+    public void registerListener() {
         EventsUtil.registerEventOnce(this, plugin);
     }
 
     @EventHandler
-    private void onItemsAdderLoadData(ItemsAdderLoadDataEvent e)
-    {
+    private void onItemsAdderLoadData(ItemsAdderLoadDataEvent e) {
         plugin.getLogger().log(Level.INFO, "RPGhuds - ItemsAdder finished loading");
         rpgHuds.needsIaZip = false;
 

@@ -17,55 +17,46 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.WeakHashMap;
 
-public class ArrowTargetHudListener implements Listener
-{
+public class ArrowTargetHudListener implements Listener {
     private final Plugin plugin;
     private final RPGHuds rpgHuds;
 
     WeakHashMap<Integer, Player> projectilesShotByPlayer = new WeakHashMap<>();
 
-    public ArrowTargetHudListener(Plugin plugin, RPGHuds rpgHuds)
-    {
+    public ArrowTargetHudListener(Plugin plugin, RPGHuds rpgHuds) {
         this.plugin = plugin;
         this.rpgHuds = rpgHuds;
     }
 
-    public void registerListener()
-    {
+    public void registerListener() {
         EventsUtil.registerEventOnce(this, plugin);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerShootBow(EntityShootBowEvent e)
-    {
+    private void onPlayerShootBow(EntityShootBowEvent e) {
         if (!(e.getEntity() instanceof Player))
             return;
 
         ArrowTargetHud hud = (ArrowTargetHud) rpgHuds.getPlayerHud((Player) e.getEntity(), "rpghuds:arrow_target");
-        if(hud != null)
+        if (hud != null)
             projectilesShotByPlayer.put(e.getProjectile().getEntityId(), (Player) e.getEntity());
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onProjectileHit(ProjectileHitEvent e)
-    {
+    private void onProjectileHit(ProjectileHitEvent e) {
         Projectile projectile = e.getEntity();
         Player player = projectilesShotByPlayer.get(projectile.getEntityId());
-        if(player == null)
+        if (player == null)
             return;
 
         Block hitBlock = e.getHitBlock();
-        if (hitBlock != null)
-        {
-            if (hitBlock.getType() == Material.TARGET)
-            {
+        if (hitBlock != null) {
+            if (hitBlock.getType() == Material.TARGET) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
-                    if (hitBlock.getType() == Material.TARGET)
-                    {
+                    if (hitBlock.getType() == Material.TARGET) {
                         ArrowTargetHud hud = (ArrowTargetHud) rpgHuds.getPlayerHud(player, "rpghuds:arrow_target");
-                        if (hud != null)
-                        {
+                        if (hud != null) {
                             int power = ((AnaloguePowerable) hitBlock.getBlockData()).getPower();
                             hud.setAccuracy(power);
                         }

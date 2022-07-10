@@ -26,8 +26,7 @@ import java.nio.charset.StandardCharsets;
  * If it's heavier than the actual design please don't make any change.
  * Make sure your changes are actually optimized and perfectly usable in a large scale server.
  */
-public final class Main extends JavaPlugin implements Listener
-{
+public final class Main extends JavaPlugin implements Listener {
     private static Main instance;
     public static Settings settings;
     private static RPGHuds rpgHuds;
@@ -35,14 +34,12 @@ public final class Main extends JavaPlugin implements Listener
     @Nullable
     public static Economy econ = null;
 
-    public static Main inst()
-    {
+    public static Main inst() {
         return instance;
     }
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         instance = this;
 
         initVaultEconomy();
@@ -54,45 +51,36 @@ public final class Main extends JavaPlugin implements Listener
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         rpgHuds.cleanup();
     }
 
-    public void initConfig()
-    {
+    public void initConfig() {
         reloadConfig();
 
-        try
-        {
+        try {
             File configFile = new File(getDataFolder(), "config.yml");
             FileConfiguration config = getConfig();
             InputStream configResource = getResource("config.yml");
-            if(configResource == null)
-            {
+            if (configResource == null) {
                 getLogger().severe("Error. Missing config.yml inside the JAR file.");
                 return;
             }
 
             // Load the default file from JAR resources
-            if (!configFile.exists())
-            {
+            if (!configFile.exists()) {
                 FileUtils.copyInputStreamToFile(configResource, configFile);
-            }
-            else // Add missing properties
+            } else // Add missing properties
             {
                 FileConfiguration tmp = YamlConfiguration.loadConfiguration((new InputStreamReader(configResource, StandardCharsets.UTF_8)));
-                for (String k : tmp.getKeys(true))
-                {
+                for (String k : tmp.getKeys(true)) {
                     if (!config.contains(k))
                         config.set(k, tmp.get(k));
                 }
                 config.save(configFile);
             }
             config.load(configFile);
-        }
-        catch (IOException | InvalidConfigurationException e)
-        {
+        } catch (IOException | InvalidConfigurationException e) {
             getLogger().severe("Error loading config.yml file.");
             e.printStackTrace();
         }
@@ -100,15 +88,13 @@ public final class Main extends JavaPlugin implements Listener
         settings = new Settings(getConfig());
     }
 
-    private void initVaultEconomy()
-    {
+    private void initVaultEconomy() {
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp != null)
             econ = rsp.getProvider();
     }
 
-    public void reloadPlugin()
-    {
+    public void reloadPlugin() {
         rpgHuds.cleanup();
         initVaultEconomy();
         initConfig();

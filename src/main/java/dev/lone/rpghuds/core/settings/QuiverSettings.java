@@ -6,8 +6,7 @@ import java.util.HashSet;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class QuiverSettings extends IconAmountSettings
-{
+public class QuiverSettings extends IconAmountSettings {
     public final FontImageWrapper icon_half;
     public final FontImageWrapper icon_empty;
     public final int offsetOffhand;
@@ -30,8 +29,7 @@ public class QuiverSettings extends IconAmountSettings
                           int offsetMainHand,
                           int offsetOffhand,
                           HashSet<String> worlds
-    )
-    {
+    ) {
         super(
                 namespacedID,
                 icon,

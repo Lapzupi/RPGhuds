@@ -11,8 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
 
-public class MoneyHud extends PAPIHud<MoneySettings>
-{
+public class MoneyHud extends PAPIHud<MoneySettings> {
     private static boolean HAS_CHECKED_PLACEHOLDER = false;
 
     private final Player player;
@@ -27,8 +26,7 @@ public class MoneyHud extends PAPIHud<MoneySettings>
 
     public MoneyHud(String placeholder,
                     PlayerHudsHolderWrapper holder,
-                    MoneySettings settings) throws NullPointerException
-    {
+                    MoneySettings settings) throws NullPointerException {
         super(placeholder, holder, settings);
         this.player = holder.getPlayer();
 
@@ -38,28 +36,23 @@ public class MoneyHud extends PAPIHud<MoneySettings>
     }
 
     @Override
-    public RenderAction refreshRender()
-    {
+    public RenderAction refreshRender() {
         return refreshRender(false);
     }
 
     @Override
-    public RenderAction refreshRender(boolean forceRender)
-    {
+    public RenderAction refreshRender(boolean forceRender) {
         if (hidden)
             return RenderAction.HIDDEN;
 
-        if (!hudSettings.worlds.contains(player.getWorld().getName()))
-        {
+        if (!hudSettings.worlds.contains(player.getWorld().getName())) {
             hud.setVisible(false); //I think this will cause problems
             return RenderAction.HIDDEN;
         }
 
-        if(Main.econ != null)
-        {
+        if (Main.econ != null) {
             double balance = Main.econ.getBalance(player);
-            if(balance != prevBalance)
-            {
+            if (balance != prevBalance) {
                 if (balance > prevBalance)
                     currentArrow = hudSettings.char_arrow_up;
                 else
@@ -67,7 +60,7 @@ public class MoneyHud extends PAPIHud<MoneySettings>
 
                 prevBalance = balance;
 
-                if(arrowRemoveSchedule != null)
+                if (arrowRemoveSchedule != null)
                     arrowRemoveSchedule.cancel();
                 arrowRemoveSchedule = Bukkit.getScheduler().runTaskLaterAsynchronously(Main.inst(), () -> {
                     currentArrow = null;
@@ -84,8 +77,7 @@ public class MoneyHud extends PAPIHud<MoneySettings>
             return RenderAction.SAME_AS_BEFORE;
 
         //TODO: Shit, recode this. PAPI doesn't allow me to preemptively check if a placeholder is working or not.
-        if(!HAS_CHECKED_PLACEHOLDER && amount.equals(placeholder))
-        {
+        if (!HAS_CHECKED_PLACEHOLDER && amount.equals(placeholder)) {
             Main.inst().getLogger().severe(
                     ChatColor.RED +
                             "Failed to replace PAPI placeholder for player " + player.getName() + ". '" + placeholder + "' probably doesn't exists. " +
@@ -98,7 +90,7 @@ public class MoneyHud extends PAPIHud<MoneySettings>
 
         imgsBuffer.clear();
 
-        if(currentArrow != null)
+        if (currentArrow != null)
             imgsBuffer.add(currentArrow);
 
         hudSettings.appendAmountToImages(amount, imgsBuffer);
@@ -114,8 +106,7 @@ public class MoneyHud extends PAPIHud<MoneySettings>
     }
 
     @Override
-    public void deleteRender()
-    {
+    public void deleteRender() {
         hud.clearFontImagesAndRefresh();
 
         if (arrowRemoveSchedule != null)

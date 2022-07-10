@@ -6,8 +6,7 @@ import java.util.HashSet;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class MoneySettings extends IconAmountSettings
-{
+public class MoneySettings extends IconAmountSettings {
     public final FontImageWrapper char_k;
     public final FontImageWrapper char_m;
     public final FontImageWrapper char_b;
@@ -40,8 +39,7 @@ public class MoneySettings extends IconAmountSettings
                          String char_arrow_down,
                          int initialOffsetX,
                          HashSet<String> worlds
-    )
-    {
+    ) {
         super(
                 namespacedID,
                 icon,

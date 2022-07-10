@@ -7,8 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class QuiverHud extends Hud<QuiverSettings>
-{
+public class QuiverHud extends Hud<QuiverSettings> {
     private final Player player;
 
     private int arrows = -1;
@@ -18,8 +17,7 @@ public class QuiverHud extends Hud<QuiverSettings>
     private boolean hiddenNoWeapon;
 
     public QuiverHud(PlayerHudsHolderWrapper holder,
-                     QuiverSettings settings) throws NullPointerException
-    {
+                     QuiverSettings settings) throws NullPointerException {
         super(holder, settings);
 
         this.player = holder.getPlayer();
@@ -34,14 +32,12 @@ public class QuiverHud extends Hud<QuiverSettings>
     }
 
     @Override
-    public RenderAction refreshRender()
-    {
+    public RenderAction refreshRender() {
         return refreshRender(false);
     }
 
     @Override
-    public RenderAction refreshRender(boolean forceRender)
-    {
+    public RenderAction refreshRender(boolean forceRender) {
         if (hidden || hiddenNoWeapon)
             return RenderAction.HIDDEN;
 
@@ -49,8 +45,7 @@ public class QuiverHud extends Hud<QuiverSettings>
         if (!forceRender && arrows == prevArrows)
             return RenderAction.SAME_AS_BEFORE;
 
-        if (!hudSettings.worlds.contains(player.getWorld().getName()))
-        {
+        if (!hudSettings.worlds.contains(player.getWorld().getName())) {
             hud.setVisible(false);
             return RenderAction.HIDDEN;
         }
@@ -59,9 +54,9 @@ public class QuiverHud extends Hud<QuiverSettings>
 
         hudSettings.appendAmountToImages(String.valueOf(arrows), imgsBuffer);
 
-        if(arrows == 0)
+        if (arrows == 0)
             imgsBuffer.add(hudSettings.icon_empty);
-        else if(arrows <= 32)
+        else if (arrows <= 32)
             imgsBuffer.add(hudSettings.icon_half);
         else
             imgsBuffer.add(hudSettings.icon);
@@ -76,20 +71,17 @@ public class QuiverHud extends Hud<QuiverSettings>
     }
 
     @Override
-    public void deleteRender()
-    {
+    public void deleteRender() {
         hud.clearFontImagesAndRefresh();
     }
 
-    private void calculateArrows()
-    {
+    private void calculateArrows() {
         arrows = 0;
-        for (ItemStack itemStack : player.getInventory())
-        {
-            if(itemStack == null)
+        for (ItemStack itemStack : player.getInventory()) {
+            if (itemStack == null)
                 continue;
             Material type = itemStack.getType();
-            if(isArrow(type))
+            if (isArrow(type))
                 arrows += itemStack.getAmount();
         }
     }
@@ -97,10 +89,9 @@ public class QuiverHud extends Hud<QuiverSettings>
     /**
      * Called when the player holds a weapon which can shoot arrows.
      */
-    public void refreshOnWeaponHold(ItemStack weapon)
-    {
+    public void refreshOnWeaponHold(ItemStack weapon) {
         hasWeapon = weapon != null && isWeapon(weapon.getType());
-        if(!hasWeapon)
+        if (!hasWeapon)
             hasWeapon = isWeapon(player.getInventory().getItemInOffHand().getType());
 
         calculateArrows();
@@ -113,8 +104,7 @@ public class QuiverHud extends Hud<QuiverSettings>
         PlayerData.sendPacket(holder, true);
     }
 
-    public void refreshArrows()
-    {
+    public void refreshArrows() {
         calculateArrows();
         updateOffsetX();
 
@@ -122,54 +112,46 @@ public class QuiverHud extends Hud<QuiverSettings>
         PlayerData.sendPacket(holder, true);
     }
 
-    public void refreshArrowsAdjust(int changeFactor)
-    {
+    public void refreshArrowsAdjust(int changeFactor) {
         arrows += changeFactor;
-        if(arrows < 0)
+        if (arrows < 0)
             arrows = 0;
         updateOffsetX();
         refreshRender();
         PlayerData.sendPacket(holder, true);
     }
 
-    public static boolean isArrow(Material type)
-    {
+    public static boolean isArrow(Material type) {
         return type == Material.ARROW || type == Material.TIPPED_ARROW || type == Material.SPECTRAL_ARROW;
     }
 
-    public static boolean isWeapon(Material type)
-    {
+    public static boolean isWeapon(Material type) {
         return type == Material.BOW || type == Material.CROSSBOW;
     }
 
-    public static boolean isWeapon(ItemStack item)
-    {
-        if(item == null)
+    public static boolean isWeapon(ItemStack item) {
+        if (item == null)
             return false;
 
         Material type = item.getType();
         return type == Material.BOW || type == Material.CROSSBOW;
     }
 
-    public static boolean hasWeapon(Player player)
-    {
+    public static boolean hasWeapon(Player player) {
         return isWeapon(player.getInventory().getItemInMainHand()) || isWeapon(player.getInventory().getItemInOffHand());
     }
 
-    public void calculateHasWeapon()
-    {
+    public void calculateHasWeapon() {
         hiddenNoWeapon = false;
         hasWeapon = isWeapon(player.getInventory().getItemInMainHand().getType())
                 || isWeapon(player.getInventory().getItemInOffHand().getType());
     }
 
-    private void updateOffsetX()
-    {
+    private void updateOffsetX() {
         updateOffsetX(player.getInventory().getItemInOffHand().getType() != Material.AIR);
     }
 
-    public void updateOffsetX(boolean isOffhandFull)
-    {
+    public void updateOffsetX(boolean isOffhandFull) {
         initialXOffset = isOffhandFull ? Main.settings.quiverOffsetWhenOffhandShown : Main.settings.quiverOffset;
     }
 }

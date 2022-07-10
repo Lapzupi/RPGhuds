@@ -11,8 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
-public class CompassHud extends Hud<CompassSettings>
-{
+public class CompassHud extends Hud<CompassSettings> {
     private static final double MAGIC_NUMBER = 11;
 
     private final Player player;
@@ -25,8 +24,7 @@ public class CompassHud extends Hud<CompassSettings>
     BukkitTask endSchedule;
 
     public CompassHud(PlayerHudsHolderWrapper holder,
-                      CompassSettings settings) throws NullPointerException
-    {
+                      CompassSettings settings) throws NullPointerException {
         super(holder, settings);
         player = holder.getPlayer();
 
@@ -36,16 +34,14 @@ public class CompassHud extends Hud<CompassSettings>
     }
 
     @Override
-    public RenderAction refreshRender(boolean force)
-    {
-        if(endSchedule != null && !endSchedule.isCancelled())
+    public RenderAction refreshRender(boolean force) {
+        if (endSchedule != null && !endSchedule.isCancelled())
             return RenderAction.HIDDEN;
 
         if (hidden || destination == null)
             return RenderAction.HIDDEN;
 
-        if (!hudSettings.worlds.contains(player.getWorld().getName()))
-        {
+        if (!hudSettings.worlds.contains(player.getWorld().getName())) {
             hud.setVisible(false);
             return RenderAction.HIDDEN;
         }
@@ -56,16 +52,14 @@ public class CompassHud extends Hud<CompassSettings>
         if (player.getLocation().getWorld() == null)
             return RenderAction.HIDDEN;
 
-        if (!player.getLocation().getWorld().equals(destination.loc.getWorld()))
-        {
+        if (!player.getLocation().getWorld().equals(destination.loc.getWorld())) {
             setImg(hudSettings.iconDiffWorld);
             return RenderAction.SEND_REFRESH;
         }
 
-        if (player.getLocation().distance(destination.loc) <= 2)
-        {
+        if (player.getLocation().distance(destination.loc) <= 2) {
             setImg(hudSettings.iconReached);
-            if(destination.callback != null)
+            if (destination.callback != null)
                 destination.callback.run();
             endSchedule = Bukkit.getScheduler().runTaskLaterAsynchronously(Main.inst(), () -> {
                 removeDestination();
@@ -89,29 +83,25 @@ public class CompassHud extends Hud<CompassSettings>
     }
 
     @Override
-    public RenderAction refreshRender()
-    {
+    public RenderAction refreshRender() {
         return refreshRender(false);
     }
 
     @Override
-    public void deleteRender()
-    {
+    public void deleteRender() {
         hud.clearFontImagesAndRefresh();
 
-        if(endSchedule != null)
-           endSchedule.cancel();
+        if (endSchedule != null)
+            endSchedule.cancel();
         endSchedule = null;
     }
 
-    private void setImg(FontImageWrapper img)
-    {
+    private void setImg(FontImageWrapper img) {
         imgsBuffer.set(0, img);
         hud.setFontImages(imgsBuffer);
     }
 
-    private double getAngle()
-    {
+    private double getAngle() {
         Location startLoc = player.getEyeLocation();
         // vector: start to destination
         Vector b = destination.loc.toVector().subtract(startLoc.toVector()).normalize();
@@ -120,53 +110,47 @@ public class CompassHud extends Hud<CompassSettings>
         return calculateAngleBetweenVectors(b, a);
     }
 
-    public void removeDestination()
-    {
+    public void removeDestination() {
         destination = null;
         hud.clearFontImagesAndRefresh();
         holder.sendUpdate();
     }
 
-    public void setDestination(Destination destination)
-    {
+    public void setDestination(Destination destination) {
         this.destination = destination;
 
         refreshRender();
         PlayerData.sendPacket(holder, true);
     }
 
-    public static double calculateAngleBetweenVectors(Vector a, Vector b)
-    {
+    public static double calculateAngleBetweenVectors(Vector a, Vector b) {
         double dot = a.dot(b);
         double det = a.getX() * b.getZ() - a.getZ() * b.getX();
         return Math.toDegrees(Math.atan2(det, dot));
     }
 
-    private static boolean dirtyEquals(Location a, Location b)
-    {
+    private static boolean dirtyEquals(Location a, Location b) {
         if (a == null && b != null)
             return false;
         return (a.getX() == b.getX() && a.getZ() == b.getZ()) && (a.getYaw() == b.getYaw() && a.getPitch() == b.getPitch());
     }
 
-    public static class Destination
-    {
+    public static class Destination {
         Location loc;
         Runnable callback;
 
         /**
          * Rappresents a destination.
-         * @param loc location to reach.
+         *
+         * @param loc      location to reach.
          * @param callback callback to be executed when the destination is reached, can be null.
          */
-        public Destination(Location loc, @Nullable Runnable callback)
-        {
+        public Destination(Location loc, @Nullable Runnable callback) {
             this.loc = loc;
             this.callback = callback;
         }
 
-        public Destination(Location loc)
-        {
+        public Destination(Location loc) {
             this.loc = loc;
         }
     }

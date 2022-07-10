@@ -8,8 +8,7 @@ import java.util.List;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public abstract class IconAmountSettings extends HudSettings
-{
+public abstract class IconAmountSettings extends HudSettings {
     public final FontImageWrapper icon;
     public final FontImageWrapper digit_0;
     public final FontImageWrapper digit_1;
@@ -26,22 +25,21 @@ public abstract class IconAmountSettings extends HudSettings
     final HashMap<Character, FontImageWrapper> charMap = new HashMap<>();
 
     IconAmountSettings(String namespacedID,
-                              String icon,
-                              String digit_0,
-                              String digit_1,
-                              String digit_2,
-                              String digit_3,
-                              String digit_4,
-                              String digit_5,
-                              String digit_6,
-                              String digit_7,
-                              String digit_8,
-                              String digit_9,
-                              String char_unknown,
-                              int initialOffsetX,
-                              HashSet<String> worlds
-    ) throws NullPointerException
-    {
+                       String icon,
+                       String digit_0,
+                       String digit_1,
+                       String digit_2,
+                       String digit_3,
+                       String digit_4,
+                       String digit_5,
+                       String digit_6,
+                       String digit_7,
+                       String digit_8,
+                       String digit_9,
+                       String char_unknown,
+                       int initialOffsetX,
+                       HashSet<String> worlds
+    ) throws NullPointerException {
         super(namespacedID, initialOffsetX, worlds);
         this.icon = getFontImage(icon);
         this.digit_0 = getFontImage(digit_0);
@@ -71,18 +69,17 @@ public abstract class IconAmountSettings extends HudSettings
 
     /**
      * Appends the FontImages representation of the provided amount String to the provided FontImages list.
+     *
      * @param amount amount string (example: 25.3M)
-     * @param list FontImages list of the HUD.
+     * @param list   FontImages list of the HUD.
      */
-    public void appendAmountToImages(String amount, List<FontImageWrapper> list)
-    {
+    public void appendAmountToImages(String amount, List<FontImageWrapper> list) {
         FontImageWrapper img;
         char c;
-        for (int i = 0; i < amount.length(); i++)
-        {
+        for (int i = 0; i < amount.length(); i++) {
             c = amount.charAt(i);
             img = charMap.get(c);
-            if(img == null)
+            if (img == null)
                 list.add(char_unknown);
             else
                 list.add(img);

@@ -7,8 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-public class ArrowTargetHud extends Hud<ArrowTargetSettings>
-{
+public class ArrowTargetHud extends Hud<ArrowTargetSettings> {
     private final Player player;
 
     BukkitTask hideSchedule;
@@ -17,8 +16,7 @@ public class ArrowTargetHud extends Hud<ArrowTargetSettings>
     private int prevAccuracy;
 
     public ArrowTargetHud(PlayerHudsHolderWrapper holder,
-                          ArrowTargetSettings settings) throws NullPointerException
-    {
+                          ArrowTargetSettings settings) throws NullPointerException {
         super(holder, settings);
         this.player = holder.getPlayer();
 
@@ -26,14 +24,12 @@ public class ArrowTargetHud extends Hud<ArrowTargetSettings>
     }
 
     @Override
-    public RenderAction refreshRender()
-    {
+    public RenderAction refreshRender() {
         return refreshRender(false);
     }
 
     @Override
-    public RenderAction refreshRender(boolean forceRender)
-    {
+    public RenderAction refreshRender(boolean forceRender) {
         if (hidden)
             return RenderAction.HIDDEN;
 
@@ -44,8 +40,7 @@ public class ArrowTargetHud extends Hud<ArrowTargetSettings>
         if (!forceRender && accuracy == prevAccuracy)
             return RenderAction.SAME_AS_BEFORE;
 
-        if (!hudSettings.worlds.contains(player.getWorld().getName()))
-        {
+        if (!hudSettings.worlds.contains(player.getWorld().getName())) {
             hud.setVisible(false);
             return RenderAction.HIDDEN;
         }
@@ -65,30 +60,27 @@ public class ArrowTargetHud extends Hud<ArrowTargetSettings>
     }
 
     @Override
-    public void deleteRender()
-    {
+    public void deleteRender() {
         hud.clearFontImagesAndRefresh();
 
-        if(hideSchedule != null)
+        if (hideSchedule != null)
             hideSchedule.cancel();
         hideSchedule = null;
     }
 
-    public void setDamage(int damage)
-    {
+    public void setDamage(int damage) {
         //TODO:
         // it has no sense to use accuracy for entities because what should I check? Headshot accuracy? idk.
         // instead I show the damage dealt to the entity
     }
 
-    public void setAccuracy(int power)
-    {
+    public void setAccuracy(int power) {
         this.accuracy = power * 100 / 15;
 
         refreshRender(true);
         holder.sendUpdate();
 
-        if(hideSchedule != null)
+        if (hideSchedule != null)
             hideSchedule.cancel();
 
         hideSchedule = Bukkit.getScheduler().runTaskLaterAsynchronously(Main.inst(), () -> {
@@ -96,8 +88,7 @@ public class ArrowTargetHud extends Hud<ArrowTargetSettings>
             hud.clearFontImagesAndRefresh();
             holder.sendUpdate();
 
-            if(hideSchedule != null)
-            {
+            if (hideSchedule != null) {
                 hideSchedule.cancel();
                 hideSchedule = null;
             }

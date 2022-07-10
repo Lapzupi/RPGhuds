@@ -9,8 +9,7 @@ import java.util.HashSet;
  * Recode this shit
  */
 @Deprecated
-public class Settings
-{
+public class Settings {
     public boolean moneyEnabled;
     public String moneyPapi;
     public long refreshIntervalTicks;
@@ -38,8 +37,7 @@ public class Settings
     public String msgDestinationSet;
     public String msgDestinationRemoved;
 
-    public Settings(FileConfiguration config)
-    {
+    public Settings(FileConfiguration config) {
         this.refreshIntervalTicks = config.getLong("huds_refresh_interval_ticks", 30);
         this.refreshHighFrequencyIntervalTicks = config.getLong("huds_high_frequency_refresh_interval_ticks", 2);
 
