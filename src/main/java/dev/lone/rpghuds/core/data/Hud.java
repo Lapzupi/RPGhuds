@@ -8,8 +8,7 @@ import dev.lone.rpghuds.core.settings.HudSettings;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Hud<T extends HudSettings>
-{
+public abstract class Hud<T extends HudSettings> {
     final public T hudSettings;
     boolean hidden;
 
@@ -19,8 +18,7 @@ public abstract class Hud<T extends HudSettings>
 
     final List<FontImageWrapper> imgsBuffer;
 
-    public Hud(PlayerHudsHolderWrapper holder, T settings)
-    {
+    public Hud(PlayerHudsHolderWrapper holder, T settings) {
         this.imgsBuffer = new ArrayList<>();
         this.holder = holder;
         this.hud = settings.newInstanceByPlayer(holder);
@@ -30,12 +28,12 @@ public abstract class Hud<T extends HudSettings>
     }
 
     public abstract RenderAction refreshRender(boolean force);
+
     public abstract RenderAction refreshRender();
 
     public abstract void deleteRender();
 
-    public void hide(boolean hide)
-    {
+    public void hide(boolean hide) {
         hud.setVisible(!hide);
         refreshRender(); // Is this call needed?
     }
@@ -45,8 +43,7 @@ public abstract class Hud<T extends HudSettings>
      * - HUD is on the left part of the screen and has text on the left side of the HUD
      * - HUD is on the right part of the screen and has text on the right side of the HUD
      */
-    public void adjustOffset()
-    {
+    public void adjustOffset() {
         adjustOffset(initialXOffset);
     }
 
@@ -57,16 +54,14 @@ public abstract class Hud<T extends HudSettings>
      *
      * @param initialOffset initial X offset of the HUD.
      */
-    public void adjustOffset(int initialOffset)
-    {
+    public void adjustOffset(int initialOffset) {
         int offset = initialOffset;
         for (FontImageWrapper img : imgsBuffer)
             offset -= img.getWidth();
         hud.setOffsetX(offset);
     }
 
-    enum RenderAction
-    {
+    enum RenderAction {
         SEND_REFRESH,
         SAME_AS_BEFORE,
         HIDDEN

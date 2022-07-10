@@ -26,8 +26,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class RPGHuds
-{
+public class RPGHuds {
     private static RPGHuds instance;
 
     static final String WARNING = "Please don't forget to regen your resourcepack using /iazip command.";
@@ -45,8 +44,7 @@ public class RPGHuds
     private final List<String> hudsNames = Arrays.asList("rpghuds:money", "rpghuds:compass", "rpghuds:quiver", "rpghuds:arrow_target");
 
 
-    public RPGHuds(Main plugin)
-    {
+    public RPGHuds(Main plugin) {
         instance = this;
 
         this.plugin = plugin;
@@ -59,56 +57,45 @@ public class RPGHuds
             initAllPlayers();
     }
 
-    public static RPGHuds inst()
-    {
+    public static RPGHuds inst() {
         return instance;
     }
 
     //TODO: recode this shit. Very dirty
-    public List<String> getHudsNames()
-    {
+    public List<String> getHudsNames() {
         return hudsNames;
     }
 
     @Nullable
-    public Hud<?> getPlayerHud(Player player, String namespacedID)
-    {
+    public Hud<?> getPlayerHud(Player player, String namespacedID) {
         PlayerData playerData = datasByPlayer.get(player);
         if (playerData == null)
             return null;
         return playerData.allHuds_byNamespacedId.get(namespacedID);
     }
 
-    public void initAllPlayers()
-    {
-        if(allPlayersInitialized)
-        {
+    public void initAllPlayers() {
+        if (allPlayersInitialized) {
             plugin.getLogger().severe("Error: players already initialized! Be sure to first call RPGHuds#cleanup().");
             return;
         }
-        try
-        {
+        try {
             for (Player player : Bukkit.getServer().getOnlinePlayers())
                 initPlayer(player);
             scheduleRefresh();
             allPlayersInitialized = true;
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             plugin.getLogger().warning(WARNING);
         }
     }
 
-    void initPlayer(Player player)
-    {
+    void initPlayer(Player player) {
         PlayerData playerData;
-        try
-        {
+        try {
             playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
 
             //TODO: recode this shit. Very dirty
-            if (Main.settings.moneyEnabled)
-            {
+            if (Main.settings.moneyEnabled) {
                 playerData.registerHud(new MoneyHud(
                         Main.settings.moneyPapi,
                         playerData.getHolder(),
@@ -141,8 +128,7 @@ public class RPGHuds
             }
 
             //TODO: recode this shit. Very dirty
-            if (Main.settings.compassEnabled)
-            {
+            if (Main.settings.compassEnabled) {
                 playerData.registerHud(new CompassHud(
                         playerData.getHolder(),
                         new CompassSettings(
@@ -155,8 +141,7 @@ public class RPGHuds
             }
 
             //TODO: recode this shit. Very dirty
-            if (Main.settings.quiverEnabled)
-            {
+            if (Main.settings.quiverEnabled) {
                 playerData.registerHud(new QuiverHud(
                         playerData.getHolder(),
                         new QuiverSettings(
@@ -183,8 +168,7 @@ public class RPGHuds
             }
 
             //TODO: recode this shit. Very dirty
-            if (Main.settings.quiverEnabled)
-            {
+            if (Main.settings.quiverEnabled) {
                 playerData.registerHud(new ArrowTargetHud(
                         playerData.getHolder(),
                         new ArrowTargetSettings(
@@ -210,9 +194,7 @@ public class RPGHuds
 
             datasByPlayer.put(player, playerData);
             datas.add(playerData);
-        }
-        catch (NullPointerException exc)
-        {
+        } catch (NullPointerException exc) {
             Main.inst().getLogger().severe(ChatColor.RED + "Failed to load PlayerData: " + exc.getMessage());
         }
     }
@@ -221,8 +203,7 @@ public class RPGHuds
     // Warning: make sure to increment the refresh rate only when it's actually needed by the animation.
     // I don't want the plugin to become heavy just for a stupid animation.
 
-    private void scheduleRefresh()
-    {
+    private void scheduleRefresh() {
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
                 data.refreshAllHuds();
@@ -234,16 +215,14 @@ public class RPGHuds
         }, Main.settings.refreshHighFrequencyIntervalTicks, Main.settings.refreshHighFrequencyIntervalTicks));
     }
 
-    void unregisterAllPlayers()
-    {
+    void unregisterAllPlayers() {
         for (BukkitTask task : refreshTasks)
             task.cancel();
         refreshTasks.clear();
         allPlayersInitialized = false;
     }
 
-    public void cleanup()
-    {
+    public void cleanup() {
         unregisterAllPlayers();
 
         for (PlayerData data : datas)
@@ -253,31 +232,25 @@ public class RPGHuds
         datasByPlayer.clear();
     }
 
-    private void extractDefaultAssets()
-    {
+    private void extractDefaultAssets() {
         CodeSource src = Main.class.getProtectionDomain().getCodeSource();
-        if (src != null)
-        {
+        if (src != null) {
             File itemsadderRoot = new File(plugin.getDataFolder().getParent() + "/ItemsAdder");
 
             URL jar = src.getLocation();
             ZipInputStream zip;
-            try
-            {
+            try {
                 plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
 
                 zip = new ZipInputStream(jar.openStream());
-                while (true)
-                {
+                while (true) {
                     ZipEntry e = zip.getNextEntry();
                     if (e == null)
                         break;
                     String name = e.getName();
-                    if (!e.isDirectory() && name.startsWith("data/"))
-                    {
+                    if (!e.isDirectory() && name.startsWith("data/")) {
                         File dest = new File(itemsadderRoot, name);
-                        if (!dest.exists())
-                        {
+                        if (!dest.exists()) {
                             FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
                             plugin.getLogger().info(ChatColor.AQUA + "       - Extracted " + name);
                             needsIaZip = true;
@@ -286,9 +259,7 @@ public class RPGHuds
                 }
                 plugin.getLogger().info(ChatColor.GREEN + "DONE extracting assets!");
 
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 plugin.getLogger().severe("        ERROR EXTRACTING assets! StackTrace:");
                 e.printStackTrace();
             }

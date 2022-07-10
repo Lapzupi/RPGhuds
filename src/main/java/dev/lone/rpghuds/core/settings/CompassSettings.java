@@ -7,8 +7,7 @@ import java.util.HashSet;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class CompassSettings extends HudSettings
-{
+public class CompassSettings extends HudSettings {
     public final HashMap<Integer, FontImageWrapper> compassIcons = new HashMap<>();
     public final FontImageWrapper iconReached;
     public final FontImageWrapper iconDiffWorld;
@@ -17,8 +16,7 @@ public class CompassSettings extends HudSettings
                            String compassPrefix,
                            int initialOffsetX,
                            HashSet<String> worlds
-    )
-    {
+    ) {
         super(namespacedID, initialOffsetX, worlds);
 
         iconReached = getFontImage(compassPrefix + "reached");

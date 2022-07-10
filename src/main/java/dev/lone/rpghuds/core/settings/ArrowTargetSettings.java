@@ -4,8 +4,7 @@ import java.util.HashSet;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class ArrowTargetSettings extends IconAmountSettings
-{
+public class ArrowTargetSettings extends IconAmountSettings {
     public ArrowTargetSettings(String namespacedID,
                                String icon,
                                String digit_0,
@@ -22,8 +21,7 @@ public class ArrowTargetSettings extends IconAmountSettings
                                String char_percentage,
                                int initialOffsetX,
                                HashSet<String> worlds
-    )
-    {
+    ) {
         super(
                 namespacedID,
                 icon,

@@ -18,27 +18,23 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public class QuiverHudListener implements Listener
-{
+public class QuiverHudListener implements Listener {
     private final Plugin plugin;
     private final RPGHuds rpgHuds;
 
-    public QuiverHudListener(Plugin plugin, RPGHuds rpgHuds, long compassContentUpdateTicks)
-    {
+    public QuiverHudListener(Plugin plugin, RPGHuds rpgHuds, long compassContentUpdateTicks) {
         this.plugin = plugin;
         this.rpgHuds = rpgHuds;
 
         //This task makes sure the quiver HUD arrows indicator is always up-to-date because the player inventory
         //may be changed by external causes (plugins manually giving/removing items to the player)
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            for (Player player : Bukkit.getOnlinePlayers())
-            {
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(player, "rpghuds:quiver");
-                if(hud == null)
+                if (hud == null)
                     continue;
 
-                if(QuiverHud.hasWeapon(player))
-                {
+                if (QuiverHud.hasWeapon(player)) {
                     hud.calculateHasWeapon();
                     hud.refreshArrows();
                 }
@@ -47,82 +43,71 @@ public class QuiverHudListener implements Listener
         }, compassContentUpdateTicks, compassContentUpdateTicks);
     }
 
-    public void registerListener()
-    {
+    public void registerListener() {
         EventsUtil.registerEventOnce(this, plugin);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onInventoryClose(InventoryCloseEvent e)
-    {
+    private void onInventoryClose(InventoryCloseEvent e) {
         QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud((Player) e.getPlayer(), "rpghuds:quiver");
-        if(hud != null)
+        if (hud != null)
             hud.refreshArrows();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerPickupArrow(PlayerPickupItemEvent e)
-    {
-        if(QuiverHud.isArrow(e.getItem().getItemStack().getType()))
-        {
+    private void onPlayerPickupArrow(PlayerPickupItemEvent e) {
+        if (QuiverHud.isArrow(e.getItem().getItemStack().getType())) {
             QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(e.getPlayer(), "rpghuds:quiver");
-            if(hud != null)
+            if (hud != null)
                 hud.refreshArrowsAdjust(e.getItem().getItemStack().getAmount());
         }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerDropItem(PlayerDropItemEvent e)
-    {
-        if(QuiverHud.isArrow(e.getItemDrop().getItemStack().getType()))
-        {
+    private void onPlayerDropItem(PlayerDropItemEvent e) {
+        if (QuiverHud.isArrow(e.getItemDrop().getItemStack().getType())) {
             QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(e.getPlayer(), "rpghuds:quiver");
-            if(hud != null)
+            if (hud != null)
                 hud.refreshArrowsAdjust(-e.getItemDrop().getItemStack().getAmount());
         }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerItemHeld(PlayerItemHeldEvent e)
-    {
+    private void onPlayerItemHeld(PlayerItemHeldEvent e) {
         ItemStack itemStack = e.getPlayer().getInventory().getItem(e.getNewSlot());
 
         QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(e.getPlayer(), "rpghuds:quiver");
-        if(hud != null)
+        if (hud != null)
             hud.refreshOnWeaponHold(itemStack);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerSwapHandItems(PlayerSwapHandItemsEvent e)
-    {
+    private void onPlayerSwapHandItems(PlayerSwapHandItemsEvent e) {
         QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(e.getPlayer(), "rpghuds:quiver");
-        if(hud != null)
-        {
+        if (hud != null) {
             hud.calculateHasWeapon();
 
             // If it's swapping offhand -> mainhand we need a little delay because the vanilla animation has a little delay.
-            if(QuiverHud.isWeapon(e.getMainHandItem()))
+            if (QuiverHud.isWeapon(e.getMainHandItem()))
                 Bukkit.getScheduler().runTaskLater(plugin, () -> handleItemSwap(hud, e), 2);
             else
                 handleItemSwap(hud, e);
         }
     }
 
-    private void handleItemSwap(QuiverHud hud, PlayerSwapHandItemsEvent e)
-    {
+    private void handleItemSwap(QuiverHud hud, PlayerSwapHandItemsEvent e) {
         hud.updateOffsetX(e.getOffHandItem() != null && e.getOffHandItem().getType() != Material.AIR);
         hud.refreshRender(true);
         PlayerData.sendPacket(hud.holder, true);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerShootBow(EntityShootBowEvent e)
-    {
+    private void onPlayerShootBow(EntityShootBowEvent e) {
         if (!(e.getEntity() instanceof Player))
             return;
 
         QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud((Player) e.getEntity(), "rpghuds:quiver");
-        if(hud != null)
+        if (hud != null)
             hud.refreshArrowsAdjust(-1);
     }
 }

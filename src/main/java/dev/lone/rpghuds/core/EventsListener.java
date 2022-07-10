@@ -13,34 +13,30 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
-class EventsListener implements Listener
-{
+class EventsListener implements Listener {
     private final Plugin plugin;
     private final RPGHuds rpgHuds;
     private ItemsAdderLoadListener itemsAdderLoadListener;
 
-    EventsListener(Plugin plugin, RPGHuds rpgHuds)
-    {
+    EventsListener(Plugin plugin, RPGHuds rpgHuds) {
         this.plugin = plugin;
         this.rpgHuds = rpgHuds;
         this.itemsAdderLoadListener = new ItemsAdderLoadListener(plugin, rpgHuds);
     }
 
-    public void registerListener()
-    {
+    public void registerListener() {
         EventsUtil.registerEventOnce(this, plugin);
         itemsAdderLoadListener.registerListener();
 
-        if(Main.settings.quiverEnabled)
+        if (Main.settings.quiverEnabled)
             new QuiverHudListener(plugin, rpgHuds, Main.settings.quiverContentUpdateTicks).registerListener();
 
-        if(Main.settings.arrowTargetEnabled)
+        if (Main.settings.arrowTargetEnabled)
             new ArrowTargetHudListener(plugin, rpgHuds).registerListener();
     }
 
     @EventHandler
-    private void onItemsAdderLoad(PluginEnableEvent e)
-    {
+    private void onItemsAdderLoad(PluginEnableEvent e) {
         if (!e.getPlugin().getName().equals("ItemsAdder"))
             return;
 
@@ -54,8 +50,7 @@ class EventsListener implements Listener
     }
 
     @EventHandler
-    private void onItemsAdderUnload(PluginDisableEvent e)
-    {
+    private void onItemsAdderUnload(PluginDisableEvent e) {
         if (!e.getPlugin().getName().equals("ItemsAdder"))
             return;
 
@@ -69,12 +64,9 @@ class EventsListener implements Listener
     }
 
     @EventHandler
-    private void onJoin(PlayerJoinEvent e)
-    {
-        if (rpgHuds.notifyIazip)
-        {
-            if (e.getPlayer().isOp())
-            {
+    private void onJoin(PlayerJoinEvent e) {
+        if (rpgHuds.notifyIazip) {
+            if (e.getPlayer().isOp()) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     e.getPlayer().sendMessage(ChatColor.RED + RPGHuds.WARNING);
                 }, 60L);
