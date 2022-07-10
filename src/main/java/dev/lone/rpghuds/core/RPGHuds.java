@@ -41,7 +41,7 @@ public class RPGHuds {
     private boolean allPlayersInitialized;
 
     //TODO: recode this shit. Very dirty
-    private final List<String> hudsNames = Arrays.asList("rpghuds:money", "rpghuds:compass", "rpghuds:quiver", "rpghuds:arrow_target");
+    private final List<String> hudsNames = List.of("rpghuds:money", "rpghuds:compass", "rpghuds:quiver", "rpghuds:arrow_target");
 
 
     public RPGHuds(Main plugin) {
@@ -52,9 +52,6 @@ public class RPGHuds {
         new EventsListener(plugin, this).registerListener();
 
         extractDefaultAssets();
-
-        if (ItemsAdder.areItemsLoaded() && !needsIaZip)
-            initAllPlayers();
     }
 
     public static RPGHuds inst() {

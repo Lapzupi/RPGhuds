@@ -1,5 +1,6 @@
 package dev.lone.rpghuds.core;
 
+import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.utils.EventsUtil;
 import org.bukkit.Bukkit;
@@ -45,6 +46,14 @@ class EventsListener implements Listener {
 
         if (this.itemsAdderLoadListener != null)
             this.itemsAdderLoadListener = new ItemsAdderLoadListener(plugin, rpgHuds);
+
+        rpgHuds.initAllPlayers();
+    }
+
+    @EventHandler
+    private void onItemsAdderItemsLoad(ItemsAdderLoadDataEvent event) {
+        if(rpgHuds.needsIaZip)
+            return;
 
         rpgHuds.initAllPlayers();
     }
