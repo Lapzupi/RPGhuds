@@ -51,14 +51,6 @@ class EventsListener implements Listener {
     }
 
     @EventHandler
-    private void onItemsAdderItemsLoad(ItemsAdderLoadDataEvent event) {
-        if(rpgHuds.needsIaZip)
-            return;
-
-        rpgHuds.initAllPlayers();
-    }
-
-    @EventHandler
     private void onItemsAdderUnload(PluginDisableEvent e) {
         if (!e.getPlugin().getName().equals("ItemsAdder"))
             return;
@@ -74,13 +66,9 @@ class EventsListener implements Listener {
 
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
-        if (rpgHuds.notifyIazip) {
-            if (e.getPlayer().isOp()) {
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    e.getPlayer().sendMessage(ChatColor.RED + RPGHuds.WARNING);
-                }, 60L);
-                rpgHuds.notifyIazip = false;
-            }
+        if (rpgHuds.notifyIazip && e.getPlayer().isOp()) {
+            Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().sendMessage(ChatColor.RED + RPGHuds.WARNING), 60L);
+            rpgHuds.notifyIazip = false;
         }
 
         if (!rpgHuds.needsIaZip)

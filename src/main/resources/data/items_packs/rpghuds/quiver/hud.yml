@@ -1,8 +1,0 @@
-info:
-  namespace: rpghuds
-huds:
-  quiver:
-    enabled: true
-    show:
-      auto: false
-    type: CUSTOM

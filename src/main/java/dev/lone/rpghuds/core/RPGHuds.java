@@ -1,13 +1,10 @@
 package dev.lone.rpghuds.core;
 
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
-import dev.lone.itemsadder.api.ItemsAdder;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.data.*;
-import dev.lone.rpghuds.core.settings.ArrowTargetSettings;
 import dev.lone.rpghuds.core.settings.CompassSettings;
 import dev.lone.rpghuds.core.settings.MoneySettings;
-import dev.lone.rpghuds.core.settings.QuiverSettings;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.zip.ZipEntry;
