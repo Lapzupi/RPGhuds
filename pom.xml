@@ -20,6 +20,7 @@
         <itemsadder.api.version>3.2.2-beta5_2</itemsadder.api.version>
         <placeholder.api.version>2.11.2</placeholder.api.version>
         <vault.api.version>1.7.1</vault.api.version>
+        <acf.version>0.5.1-SNAPSHOT</acf.version>
         <!-- Maven Plugin -->
         <maven.compiler.version>3.10.1</maven.compiler.version>
         <maven.shade.version>3.3.0</maven.shade.version>
@@ -36,6 +37,9 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -48,11 +52,21 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <relocations>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>dev.lone.rpghuds.acf</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>dev.lone.rpghuds.locales</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -79,6 +93,10 @@
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
     </repositories>
 
@@ -111,6 +129,12 @@
             <artifactId>VaultAPI</artifactId>
             <version>${vault.api.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>${acf.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

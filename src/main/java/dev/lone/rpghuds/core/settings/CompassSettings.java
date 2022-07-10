@@ -4,20 +4,22 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
 public class CompassSettings extends HudSettings {
-    public final HashMap<Integer, FontImageWrapper> compassIcons = new HashMap<>();
+    public final Map<Integer, FontImageWrapper> compassIcons = new HashMap<>();
     public final FontImageWrapper iconReached;
     public final FontImageWrapper iconDiffWorld;
 
     public CompassSettings(String namespacedID,
                            String compassPrefix,
                            int initialOffsetX,
-                           HashSet<String> worlds
+                           Set<String> worlds
     ) {
-        super(namespacedID, initialOffsetX, worlds);
+        super(namespacedID, initialOffsetX, new HashSet<>(worlds));
 
         iconReached = getFontImage(compassPrefix + "reached");
         iconDiffWorld = getFontImage(compassPrefix + "diff_world");

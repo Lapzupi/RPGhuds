@@ -1,6 +1,5 @@
 package dev.lone.rpghuds.core;
 
-import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.utils.EventsUtil;
 import org.bukkit.Bukkit;
@@ -29,11 +28,6 @@ class EventsListener implements Listener {
         EventsUtil.registerEventOnce(this, plugin);
         itemsAdderLoadListener.registerListener();
 
-        if (Main.settings.quiverEnabled)
-            new QuiverHudListener(plugin, rpgHuds, Main.settings.quiverContentUpdateTicks).registerListener();
-
-        if (Main.settings.arrowTargetEnabled)
-            new ArrowTargetHudListener(plugin, rpgHuds).registerListener();
     }
 
     @EventHandler

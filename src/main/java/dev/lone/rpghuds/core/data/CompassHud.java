@@ -136,7 +136,7 @@ public class CompassHud extends Hud<CompassSettings> {
     }
 
     public static class Destination {
-        Location loc;
+        final Location loc;
         Runnable callback;
 
         /**

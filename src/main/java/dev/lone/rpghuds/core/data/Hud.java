@@ -14,7 +14,7 @@ public abstract class Hud<T extends HudSettings> {
 
     public final PlayerHudsHolderWrapper holder;
     final PlayerCustomHudWrapper hud;
-    int initialXOffset;
+    final int initialXOffset;
 
     final List<FontImageWrapper> imgsBuffer;
 
@@ -32,6 +32,14 @@ public abstract class Hud<T extends HudSettings> {
     public abstract RenderAction refreshRender();
 
     public abstract void deleteRender();
+
+    public void hide() {
+        hide(true);
+    }
+
+    public void show() {
+        hide(false);
+    }
 
     public void hide(boolean hide) {
         hud.setVisible(!hide);

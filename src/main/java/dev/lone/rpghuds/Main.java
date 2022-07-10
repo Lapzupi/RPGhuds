@@ -1,7 +1,9 @@
 package dev.lone.rpghuds;
 
-import dev.lone.rpghuds.core.Commands;
+import co.aikar.commands.PaperCommandManager;
+import dev.lone.rpghuds.core.RPGCompassCommand;
 import dev.lone.rpghuds.core.RPGHuds;
+import dev.lone.rpghuds.core.RPGHudsCommand;
 import dev.lone.rpghuds.core.Settings;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.io.FileUtils;
@@ -47,7 +49,9 @@ public final class Main extends JavaPlugin implements Listener {
 
         rpgHuds = new RPGHuds(this);
 
-        new Commands().register();
+        PaperCommandManager paperCommandManager = new PaperCommandManager( this);
+        paperCommandManager.registerCommand(new RPGCompassCommand());
+        paperCommandManager.registerCommand(new RPGHudsCommand());
     }
 
     @Override

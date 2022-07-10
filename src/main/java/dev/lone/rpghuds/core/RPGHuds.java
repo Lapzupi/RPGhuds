@@ -132,7 +132,7 @@ public class RPGHuds {
                         )
                 ), true);
             }
-            
+
             datasByPlayer.put(player, playerData);
             datas.add(playerData);
         } catch (NullPointerException exc) {
