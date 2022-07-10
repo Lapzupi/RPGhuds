@@ -9,6 +9,7 @@ public class Utilz {
         try {
             return Integer.parseInt(number);
         } catch (Exception ignored) {
+            // ignore
         }
         return defaultValue;
     }
