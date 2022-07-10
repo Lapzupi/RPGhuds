@@ -238,11 +238,9 @@ public class RPGHuds {
             File itemsadderRoot = new File(plugin.getDataFolder().getParent() + "/ItemsAdder");
 
             URL jar = src.getLocation();
-            ZipInputStream zip;
-            try {
-                plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
 
-                zip = new ZipInputStream(jar.openStream());
+            try (ZipInputStream zip = new ZipInputStream(jar.openStream())){
+                plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
                 while (true) {
                     ZipEntry e = zip.getNextEntry();
                     if (e == null)
