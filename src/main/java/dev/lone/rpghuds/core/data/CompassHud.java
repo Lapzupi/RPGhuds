@@ -65,7 +65,7 @@ public class CompassHud extends Hud<CompassSettings> {
                 removeDestination();
                 endSchedule.cancel();
                 endSchedule = null;
-            }, 20 * 4);
+            }, 20L * 4);
             return RenderAction.SEND_REFRESH;
         }
 

@@ -28,8 +28,8 @@ public class RPGHudsCommand extends BaseCommand {
     @Subcommand("show")
     @CommandPermission("rpghuds.show")
     public void onShow(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
-        if(target == null) {
-            if(!(sender instanceof Player player)) {
+        if (target == null) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage("You must be player to execute this command without specifying a target.");
                 return;
             }
@@ -44,7 +44,7 @@ public class RPGHudsCommand extends BaseCommand {
             playerHud.show();
             return;
         }
-        if(!sender.hasPermission("rpghuds.show.others")) {
+        if (!sender.hasPermission("rpghuds.show.others")) {
             sender.sendMessage(ChatColor.RED + "No permission rpghuds.show.others");
             return;
         }
@@ -60,13 +60,12 @@ public class RPGHudsCommand extends BaseCommand {
 
     @Subcommand("hide")
     @CommandPermission("rpghuds.hide")
-    public void onHide(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
-        if(target == null) {
-            if(!(sender instanceof Player player)) {
-                sender.sendMessage("You must be player to execute this command without specifying a target.");
+    public void onHide(final CommandSender sender, final OnlinePlayer target, final String hudId) {
+        if (sender instanceof Player player && player != target.getPlayer()) {
+            if (!player.hasPermission("rpghuds.hide.others")) {
+                sender.sendMessage(ChatColor.RED + "No permission rpghuds.hide.others");
                 return;
             }
-
 
             Hud<?> playerHud = RPGHuds.inst().getPlayerHud(player, hudId);
             if (playerHud == null) {
@@ -78,10 +77,6 @@ public class RPGHudsCommand extends BaseCommand {
             return;
         }
 
-        if(!sender.hasPermission("rpghuds.hide.others")) {
-            sender.sendMessage(ChatColor.RED + "No permission rpghuds.hide.others");
-            return;
-        }
 
         Hud<?> playerHud = RPGHuds.inst().getPlayerHud(target.getPlayer(), hudId);
         if (playerHud == null) {

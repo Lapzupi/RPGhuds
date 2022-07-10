@@ -5,10 +5,11 @@ import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerData {
     private final PlayerHudsHolderWrapper holder;
-    public final HashMap<String, Hud<?>> allHuds_byNamespacedId = new HashMap<>();
+    public final Map<String, Hud<?>> allHudsByNamespacedId = new HashMap<>();
     public final List<Hud<?>> allHuds = new ArrayList<>();
     private final List<Hud<?>> hudsHighFreq = new ArrayList<>();
 
@@ -20,7 +21,7 @@ public class PlayerData {
         if (highFrequency)
             hudsHighFreq.add(hud);
         allHuds.add(hud);
-        allHuds_byNamespacedId.put(hud.hudSettings.namespacedID, hud);
+        allHudsByNamespacedId.put(hud.hudSettings.namespacedID, hud);
     }
 
     public PlayerHudsHolderWrapper getHolder() {
@@ -58,6 +59,6 @@ public class PlayerData {
 
         allHuds.clear();
         hudsHighFreq.clear();
-        allHuds_byNamespacedId.clear();
+        allHudsByNamespacedId.clear();
     }
 }

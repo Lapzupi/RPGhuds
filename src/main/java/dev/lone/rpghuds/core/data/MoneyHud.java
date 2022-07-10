@@ -24,9 +24,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
     @Nullable
     private FontImageWrapper currentArrow;
 
-    public MoneyHud(String placeholder,
-                    PlayerHudsHolderWrapper holder,
-                    MoneySettings settings) throws NullPointerException {
+    public MoneyHud(String placeholder, PlayerHudsHolderWrapper holder, MoneySettings settings) throws NullPointerException {
         super(placeholder, holder, settings);
         this.player = holder.getPlayer();
 
@@ -67,7 +65,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
                     arrowRemoveSchedule.cancel();
                     arrowRemoveSchedule = null;
                     refreshRender(true);
-                }, 20 * 3);
+                }, 20L * 3);
             }
         }
 
@@ -78,11 +76,10 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
 
         //TODO: Shit, recode this. PAPI doesn't allow me to preemptively check if a placeholder is working or not.
         if (!HAS_CHECKED_PLACEHOLDER && amount.equals(placeholder)) {
-            Main.inst().getLogger().severe(
-                    ChatColor.RED +
-                            "Failed to replace PAPI placeholder for player " + player.getName() + ". '" + placeholder + "' probably doesn't exists. " +
+            Main.inst().getLogger().severe(() -> (
+                    "%sFailed to replace PAPI placeholder for player %s. '%s'probably doesn't exists. " +
                             "Check RPGhuds/config.yml file and check if you have the correct economy plugin installed."
-            );
+            ).formatted(ChatColor.RED, player.getName(), placeholder));
             prevAmount = amount;
             HAS_CHECKED_PLACEHOLDER = true;
             return RenderAction.HIDDEN;

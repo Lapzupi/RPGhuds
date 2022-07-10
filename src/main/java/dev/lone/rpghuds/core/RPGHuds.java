@@ -64,7 +64,7 @@ public class RPGHuds {
         PlayerData playerData = datasByPlayer.get(player);
         if (playerData == null)
             return null;
-        return playerData.allHuds_byNamespacedId.get(namespacedID);
+        return playerData.allHudsByNamespacedId.get(namespacedID);
     }
 
     public void initAllPlayers() {
