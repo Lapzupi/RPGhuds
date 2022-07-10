@@ -7,7 +7,6 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import dev.lone.rpghuds.Main;
-import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.data.Hud;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

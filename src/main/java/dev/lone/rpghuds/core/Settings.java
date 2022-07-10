@@ -4,6 +4,7 @@ import dev.lone.rpghuds.utils.Utilz;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Recode this shit
@@ -15,21 +16,11 @@ public class Settings {
     public long refreshIntervalTicks;
     public long refreshHighFrequencyIntervalTicks;
     public int moneyOffset;
-    public HashSet<String> moneyWorlds;
+    public Set<String> moneyWorlds;
 
     public boolean compassEnabled;
     public int compassOffset;
-    public HashSet<String> compassWorlds;
-
-    public boolean quiverEnabled;
-    public HashSet<String> quiverWorlds;
-    public int quiverOffset;
-    public int quiverOffsetWhenOffhandShown;
-    public int quiverContentUpdateTicks;
-
-    public boolean arrowTargetEnabled;
-    public int arrowTargetOffset;
-    public HashSet<String> arrowTargetWorlds;
+    public Set<String> compassWorlds;
 
     public boolean debug;
     public String msgHudNotFound;
@@ -49,16 +40,6 @@ public class Settings {
         this.compassEnabled = config.getBoolean("compass.enabled", true);
         this.compassOffset = config.getInt("compass.offset", 6);
         this.compassWorlds = new HashSet<>(config.getStringList("compass.worlds"));
-
-        this.quiverEnabled = config.getBoolean("quiver.enabled", true);
-        this.quiverWorlds = new HashSet<>(config.getStringList("quiver.worlds"));
-        this.quiverOffset = config.getInt("quiver.offset.normal", -96);
-        this.quiverOffsetWhenOffhandShown = config.getInt("quiver.offset.when_offhand_shown", -124);
-        this.quiverContentUpdateTicks = config.getInt("quiver.content_update_ticks", 100);
-
-        this.arrowTargetEnabled = config.getBoolean("arrow_target.enabled", true);
-        this.arrowTargetOffset = config.getInt("arrow_target.offset", 0);
-        this.arrowTargetWorlds = new HashSet<>(config.getStringList("arrow_target.worlds"));
 
         this.debug = config.getBoolean("log.debug", false);
 

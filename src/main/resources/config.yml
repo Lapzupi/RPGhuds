@@ -16,23 +16,6 @@ compass:
     - world
     - world_nether
     - world_the_end
-quiver:
-  enabled: true
-  offset:
-    normal: -96
-    when_offhand_shown: -124
-  content_update_ticks: 100
-  worlds:
-    - world
-    - world_nether
-    - world_the_end
-arrow_target:
-  enabled: true
-  offset: -98
-  worlds:
-    - world
-    - world_nether
-    - world_the_end
 lang:
   hud_not_found: "&6Hud not found!"
   wrong_usage: "&cWrong command usage."

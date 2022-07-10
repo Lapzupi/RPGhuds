@@ -14,11 +14,7 @@ public class CompassSettings extends HudSettings {
     public final FontImageWrapper iconReached;
     public final FontImageWrapper iconDiffWorld;
 
-    public CompassSettings(String namespacedID,
-                           String compassPrefix,
-                           int initialOffsetX,
-                           Set<String> worlds
-    ) {
+    public CompassSettings(String namespacedID, String compassPrefix, int initialOffsetX, Set<String> worlds) {
         super(namespacedID, initialOffsetX, new HashSet<>(worlds));
 
         iconReached = getFontImage(compassPrefix + "reached");

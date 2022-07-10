@@ -18,6 +18,7 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -115,7 +116,7 @@ public class RPGHuds {
                                 "rpghuds:money_char_arrow_up",
                                 "rpghuds:money_char_arrow_down",
                                 Main.settings.moneyOffset,
-                                Main.settings.moneyWorlds
+                                new HashSet<>(Main.settings.moneyWorlds)
                         )
                 ), false);
             }
@@ -191,7 +192,7 @@ public class RPGHuds {
                         File dest = new File(itemsadderRoot, name);
                         if (!dest.exists()) {
                             FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
-                            plugin.getLogger().info(ChatColor.AQUA + "       - Extracted " + name);
+                            plugin.getLogger().info(() -> ChatColor.AQUA + "       - Extracted " + name);
                             needsIaZip = true;
                         }
                     }
