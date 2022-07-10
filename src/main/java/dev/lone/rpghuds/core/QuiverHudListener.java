@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -55,9 +56,11 @@ public class QuiverHudListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onPlayerPickupArrow(PlayerPickupItemEvent e) {
+    private void onPlayerPickupArrow(EntityPickupItemEvent e) {
+        if(!(e.getEntity() instanceof Player player))
+            return;
         if (QuiverHud.isArrow(e.getItem().getItemStack().getType())) {
-            QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(e.getPlayer(), "rpghuds:quiver");
+            QuiverHud hud = (QuiverHud) rpgHuds.getPlayerHud(player, "rpghuds:quiver");
             if (hud != null)
                 hud.refreshArrowsAdjust(e.getItem().getItemStack().getAmount());
         }
