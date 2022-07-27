@@ -1,59 +1,49 @@
 package dev.lone.rpghuds.core.settings;
 
+import com.google.common.collect.ImmutableMap;
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public abstract class IconAmountSettings extends HudSettings {
-    public final FontImageWrapper icon;
-    public final FontImageWrapper digit_0;
-    public final FontImageWrapper digit_1;
-    public final FontImageWrapper digit_2;
-    public final FontImageWrapper digit_3;
-    public final FontImageWrapper digit_4;
-    public final FontImageWrapper digit_5;
-    public final FontImageWrapper digit_6;
-    public final FontImageWrapper digit_7;
-    public final FontImageWrapper digit_8;
-    public final FontImageWrapper digit_9;
-    public final FontImageWrapper char_unknown;
+/**
+ * @author sarhatabaot
+ */
+public class IconAmountSettings extends HudSettings {
+    private final FontImageWrapper icon;
+    private final FontImageWrapper digit_0;
+    private final FontImageWrapper digit_1;
+    private final FontImageWrapper digit_2;
+    private final FontImageWrapper digit_3;
+    private final FontImageWrapper digit_4;
+    private final FontImageWrapper digit_5;
+    private final FontImageWrapper digit_6;
+    private final FontImageWrapper digit_7;
+    private final FontImageWrapper digit_8;
+    private final FontImageWrapper digit_9;
+    private final FontImageWrapper char_unknown;
 
-    final HashMap<Character, FontImageWrapper> charMap = new HashMap<>();
+    protected final HashMap<Character, FontImageWrapper> charMap = new HashMap<>();
 
-    IconAmountSettings(String namespacedID,
-                       String icon,
-                       String digit_0,
-                       String digit_1,
-                       String digit_2,
-                       String digit_3,
-                       String digit_4,
-                       String digit_5,
-                       String digit_6,
-                       String digit_7,
-                       String digit_8,
-                       String digit_9,
-                       String char_unknown,
-                       int initialOffsetX,
-                       HashSet<String> worlds
-    ) throws NullPointerException {
-        super(namespacedID, initialOffsetX, worlds);
-        this.icon = getFontImage(icon);
-        this.digit_0 = getFontImage(digit_0);
-        this.digit_1 = getFontImage(digit_1);
-        this.digit_2 = getFontImage(digit_2);
-        this.digit_3 = getFontImage(digit_3);
-        this.digit_4 = getFontImage(digit_4);
-        this.digit_5 = getFontImage(digit_5);
-        this.digit_6 = getFontImage(digit_6);
-        this.digit_7 = getFontImage(digit_7);
-        this.digit_8 = getFontImage(digit_8);
-        this.digit_9 = getFontImage(digit_9);
-        this.char_unknown = getFontImage(char_unknown);
+    public IconAmountSettings(final String namespacedId, final int initialOffsetX, final Set<String> worlds, @NotNull ImmutableMap<String, String> settingsMap) {
+        super(namespacedId, initialOffsetX, worlds);
 
+        this.icon = getFontImage(settingsMap.get("icon"));
+        this.digit_0 = getFontImage(settingsMap.get("digit_0"));
+        this.digit_1 = getFontImage(settingsMap.get("digit_1"));
+        this.digit_2 = getFontImage(settingsMap.get("digit_2"));
+        this.digit_3 = getFontImage(settingsMap.get("digit_3"));
+        this.digit_4 = getFontImage(settingsMap.get("digit_4"));
+        this.digit_5 = getFontImage(settingsMap.get("digit_5"));
+        this.digit_6 = getFontImage(settingsMap.get("digit_6"));
+        this.digit_7 = getFontImage(settingsMap.get("digit_7"));
+        this.digit_8 = getFontImage(settingsMap.get("digit_8"));
+        this.digit_9 = getFontImage(settingsMap.get("digit_9"));
+        this.char_unknown = getFontImage(settingsMap.get("char_unknown"));
 
         charMap.put('0', this.digit_0);
         charMap.put('1', this.digit_1);
@@ -66,6 +56,8 @@ public abstract class IconAmountSettings extends HudSettings {
         charMap.put('8', this.digit_8);
         charMap.put('9', this.digit_9);
     }
+
+
 
     /**
      * Appends the FontImages representation of the provided amount String to the provided FontImages list.
@@ -84,5 +76,53 @@ public abstract class IconAmountSettings extends HudSettings {
             else
                 list.add(img);
         }
+    }
+
+    public FontImageWrapper getIcon() {
+        return icon;
+    }
+
+    public FontImageWrapper getDigit_0() {
+        return digit_0;
+    }
+
+    public FontImageWrapper getDigit_1() {
+        return digit_1;
+    }
+
+    public FontImageWrapper getDigit_2() {
+        return digit_2;
+    }
+
+    public FontImageWrapper getDigit_3() {
+        return digit_3;
+    }
+
+    public FontImageWrapper getDigit_4() {
+        return digit_4;
+    }
+
+    public FontImageWrapper getDigit_5() {
+        return digit_5;
+    }
+
+    public FontImageWrapper getDigit_6() {
+        return digit_6;
+    }
+
+    public FontImageWrapper getDigit_7() {
+        return digit_7;
+    }
+
+    public FontImageWrapper getDigit_8() {
+        return digit_8;
+    }
+
+    public FontImageWrapper getDigit_9() {
+        return digit_9;
+    }
+
+    public FontImageWrapper getChar_unknown() {
+        return char_unknown;
     }
 }

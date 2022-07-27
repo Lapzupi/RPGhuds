@@ -1,4 +1,4 @@
-package dev.lone.rpghuds.core;
+package dev.lone.rpghuds.core.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -7,6 +7,7 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import dev.lone.rpghuds.Main;
+import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.data.Hud;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +15,11 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("rpghuds")
 public class RPGHudsCommand extends BaseCommand {
+    private final Main plugin;
+
+    public RPGHudsCommand(final Main plugin) {
+        this.plugin = plugin;
+    }
 
     @Subcommand("reload")
     @CommandPermission("rpghuds.reload")
@@ -36,7 +42,7 @@ public class RPGHudsCommand extends BaseCommand {
 
             Hud<?> playerHud = RPGHuds.inst().getPlayerHud(player, hudId);
             if (playerHud == null) {
-                sender.sendMessage(Main.settings.msgHudNotFound);
+                sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
                 return;
             }
 
@@ -49,7 +55,7 @@ public class RPGHudsCommand extends BaseCommand {
         }
         Hud<?> playerHud = RPGHuds.inst().getPlayerHud(target.getPlayer(), hudId);
         if (playerHud == null) {
-            sender.sendMessage(Main.settings.msgHudNotFound);
+            sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
             return;
         }
 
@@ -68,7 +74,7 @@ public class RPGHudsCommand extends BaseCommand {
 
             Hud<?> playerHud = RPGHuds.inst().getPlayerHud(player, hudId);
             if (playerHud == null) {
-                sender.sendMessage(Main.settings.msgHudNotFound);
+                sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
                 return;
             }
 
@@ -79,7 +85,7 @@ public class RPGHudsCommand extends BaseCommand {
 
         Hud<?> playerHud = RPGHuds.inst().getPlayerHud(target.getPlayer(), hudId);
         if (playerHud == null) {
-            sender.sendMessage(Main.settings.msgHudNotFound);
+            sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
             return;
         }
 

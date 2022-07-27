@@ -4,6 +4,7 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.settings.MoneySettings;
+import dev.lone.rpghuds.core.settings.old.MoneySettingsOld;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,9 +53,9 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
             double balance = Main.econ.getBalance(player);
             if (balance != prevBalance) {
                 if (balance > prevBalance)
-                    currentArrow = hudSettings.char_arrow_up;
+                    currentArrow = hudSettings.getChar_arrow_up();
                 else
-                    currentArrow = hudSettings.char_arrow_down;
+                    currentArrow = hudSettings.getChar_arrow_down();
 
                 prevBalance = balance;
 
@@ -91,7 +92,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
             imgsBuffer.add(currentArrow);
 
         hudSettings.appendAmountToImages(amount, imgsBuffer);
-        imgsBuffer.add(hudSettings.icon);
+        imgsBuffer.add(hudSettings.getIcon());
 
         hud.setFontImages(imgsBuffer);
 

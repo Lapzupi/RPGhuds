@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Hud<T extends HudSettings> {
-    final public T hudSettings;
+    public final T hudSettings;
     boolean hidden;
 
     public final PlayerHudsHolderWrapper holder;

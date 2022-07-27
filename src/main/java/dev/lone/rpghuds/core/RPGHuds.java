@@ -2,9 +2,10 @@ package dev.lone.rpghuds.core;
 
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
+import dev.lone.rpghuds.core.config.HudConfig;
 import dev.lone.rpghuds.core.data.*;
-import dev.lone.rpghuds.core.settings.CompassSettings;
-import dev.lone.rpghuds.core.settings.MoneySettings;
+import dev.lone.rpghuds.core.settings.old.CompassSettingsOld;
+import dev.lone.rpghuds.core.settings.old.MoneySettingsOld;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -88,11 +89,14 @@ public class RPGHuds {
         try {
             playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
             //TODO: recode this shit. Very dirty
-            if (Main.settings.moneyEnabled) {
+            for(HudConfig hudConfig: plugin.getSettings().getHudList()) {
+
+            }
+            if (Main.getSettings().isMoneyEnabled()) {
                 playerData.registerHud(new MoneyHud(
-                        Main.settings.moneyPapi,
+                        Main.getSettings().getMoneyPapi(),
                         playerData.getHolder(),
-                        new MoneySettings(
+                        new MoneySettingsOld(
                                 "rpghuds:money",
                                 "rpghuds:money_icon",
                                 "rpghuds:money_digit_0",
@@ -114,21 +118,21 @@ public class RPGHuds {
                                 "rpghuds:money_char_comma",
                                 "rpghuds:money_char_arrow_up",
                                 "rpghuds:money_char_arrow_down",
-                                Main.settings.moneyOffset,
-                                new HashSet<>(Main.settings.moneyWorlds)
+                                Main.getSettings().getMoneyOffset(),
+                                new HashSet<>(Main.getSettings().getMoneyWorlds())
                         )
                 ), false);
             }
 
             //TODO: recode this shit. Very dirty
-            if (Main.settings.compassEnabled) {
+            if (Main.getSettings().isCompassEnabled()) {
                 playerData.registerHud(new CompassHud(
                         playerData.getHolder(),
-                        new CompassSettings(
+                        new CompassSettingsOld(
                                 "rpghuds:compass",
                                 "rpghuds:hud_compass_",
-                                Main.settings.compassOffset,
-                                Main.settings.compassWorlds
+                                Main.getSettings().getCompassOffset(),
+                                Main.getSettings().getCompassWorlds()
                         )
                 ), true);
             }
@@ -148,12 +152,12 @@ public class RPGHuds {
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
                 data.refreshAllHuds();
-        }, Main.settings.refreshIntervalTicks, Main.settings.refreshIntervalTicks));
+        }, Main.getSettings().getRefreshIntervalTicks(), Main.getSettings().getRefreshIntervalTicks()));
 
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
                 data.refreshHighFrequency();
-        }, Main.settings.refreshHighFrequencyIntervalTicks, Main.settings.refreshHighFrequencyIntervalTicks));
+        }, Main.getSettings().getRefreshHighFrequencyIntervalTicks(), Main.getSettings().getRefreshHighFrequencyIntervalTicks()));
     }
 
     void unregisterAllPlayers() {

@@ -21,7 +21,7 @@ public class PlayerData {
         if (highFrequency)
             hudsHighFreq.add(hud);
         allHuds.add(hud);
-        allHudsByNamespacedId.put(hud.hudSettings.namespacedID, hud);
+        allHudsByNamespacedId.put(hud.hudSettings.namespacedId, hud);
     }
 
     public PlayerHudsHolderWrapper getHolder() {

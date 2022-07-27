@@ -1,71 +1,38 @@
 package dev.lone.rpghuds.core.settings;
 
+import com.google.common.collect.ImmutableMap;
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class MoneySettings extends IconAmountSettings {
-    public final FontImageWrapper char_k;
-    public final FontImageWrapper char_m;
-    public final FontImageWrapper char_b;
-    public final FontImageWrapper char_t;
-    public final FontImageWrapper char_dot;
-    public final FontImageWrapper char_comma;
-    public final FontImageWrapper char_arrow_up;
-    public final FontImageWrapper char_arrow_down;
+/**
+ * @author sarhatabaot
+ */
+public class MoneySettings extends IconAmountSettings{
+    private final FontImageWrapper char_k;
+    private final FontImageWrapper char_m;
+    private final FontImageWrapper char_b;
+    private final FontImageWrapper char_t;
+    private final FontImageWrapper char_dot;
+    private final FontImageWrapper char_comma;
+    private final FontImageWrapper char_arrow_up;
+    private final FontImageWrapper char_arrow_down;
 
-    public MoneySettings(String namespacedID,
-                         String icon,
-                         String digit_0,
-                         String digit_1,
-                         String digit_2,
-                         String digit_3,
-                         String digit_4,
-                         String digit_5,
-                         String digit_6,
-                         String digit_7,
-                         String digit_8,
-                         String digit_9,
-                         String char_unknown,
-                         String char_k,
-                         String char_m,
-                         String char_b,
-                         String char_t,
-                         String char_dot,
-                         String char_comma,
-                         String char_arrow_up,
-                         String char_arrow_down,
-                         int initialOffsetX,
-                         HashSet<String> worlds
-    ) {
-        super(
-                namespacedID,
-                icon,
-                digit_0,
-                digit_1,
-                digit_2,
-                digit_3,
-                digit_4,
-                digit_5,
-                digit_6,
-                digit_7,
-                digit_8,
-                digit_9,
-                char_unknown,
-                initialOffsetX,
-                worlds
-        );
+    public MoneySettings(final String namespacedId, final int initialOffsetX, final Set<String> worlds,
+                         @NotNull final ImmutableMap<String, String> settingsMap, @NotNull final ImmutableMap<String, String> charSettings) {
+        super(namespacedId, initialOffsetX, worlds, settingsMap);
 
-        this.char_k = getFontImage(char_k);
-        this.char_m = getFontImage(char_m);
-        this.char_b = getFontImage(char_b);
-        this.char_t = getFontImage(char_t);
-        this.char_dot = getFontImage(char_dot);
-        this.char_comma = getFontImage(char_comma);
-        this.char_arrow_up = getFontImage(char_arrow_up);
-        this.char_arrow_down = getFontImage(char_arrow_down);
+        this.char_k = getFontImage(charSettings.get("char_k"));
+        this.char_m = getFontImage(charSettings.get("char_m"));
+        this.char_b = getFontImage(charSettings.get("char_b"));
+        this.char_t = getFontImage(charSettings.get("char_t"));
+        this.char_dot = getFontImage(charSettings.get("char_dot"));
+        this.char_comma = getFontImage(charSettings.get("char_comma"));
+        this.char_arrow_up = getFontImage(charSettings.get("char_arrow_up"));
+        this.char_arrow_down = getFontImage(charSettings.get("char_arrow_down"));
 
         charMap.put('k', this.char_k);
         charMap.put('K', this.char_k);
@@ -77,5 +44,37 @@ public class MoneySettings extends IconAmountSettings {
         charMap.put('T', this.char_t);
         charMap.put('.', this.char_dot);
         charMap.put(',', this.char_comma);
+    }
+
+    public FontImageWrapper getChar_k() {
+        return char_k;
+    }
+
+    public FontImageWrapper getChar_m() {
+        return char_m;
+    }
+
+    public FontImageWrapper getChar_b() {
+        return char_b;
+    }
+
+    public FontImageWrapper getChar_t() {
+        return char_t;
+    }
+
+    public FontImageWrapper getChar_dot() {
+        return char_dot;
+    }
+
+    public FontImageWrapper getChar_comma() {
+        return char_comma;
+    }
+
+    public FontImageWrapper getChar_arrow_up() {
+        return char_arrow_up;
+    }
+
+    public FontImageWrapper getChar_arrow_down() {
+        return char_arrow_down;
     }
 }

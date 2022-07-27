@@ -1,6 +1,7 @@
-package dev.lone.rpghuds.core.settings;
+package dev.lone.rpghuds.core.settings.old;
 
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
+import dev.lone.rpghuds.core.settings.HudSettings;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,12 +10,12 @@ import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 
-public class CompassSettings extends HudSettings {
+public class CompassSettingsOld extends HudSettings {
     public final Map<Integer, FontImageWrapper> compassIcons = new HashMap<>();
     public final FontImageWrapper iconReached;
     public final FontImageWrapper iconDiffWorld;
 
-    public CompassSettings(String namespacedID, String compassPrefix, int initialOffsetX, Set<String> worlds) {
+    public CompassSettingsOld(String namespacedID, String compassPrefix, int initialOffsetX, Set<String> worlds) {
         super(namespacedID, initialOffsetX, new HashSet<>(worlds));
 
         iconReached = getFontImage(compassPrefix + "reached");

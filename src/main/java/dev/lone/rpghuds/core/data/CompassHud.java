@@ -3,7 +3,7 @@ package dev.lone.rpghuds.core.data;
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
-import dev.lone.rpghuds.core.settings.CompassSettings;
+import dev.lone.rpghuds.core.settings.old.CompassSettingsOld;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
-public class CompassHud extends Hud<CompassSettings> {
+public class CompassHud extends Hud<CompassSettingsOld> {
     private static final double MAGIC_NUMBER = 11;
 
     private final Player player;
@@ -24,7 +24,7 @@ public class CompassHud extends Hud<CompassSettings> {
     BukkitTask endSchedule;
 
     public CompassHud(PlayerHudsHolderWrapper holder,
-                      CompassSettings settings) throws NullPointerException {
+                      CompassSettingsOld settings) throws NullPointerException {
         super(holder, settings);
         player = holder.getPlayer();
 

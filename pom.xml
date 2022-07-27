@@ -26,6 +26,8 @@
         <maven.shade.version>3.3.0</maven.shade.version>
         <!-- Libs -->
         <commons.io.version>2.11.0</commons.io.version>
+        <krakencore.version>1.5.5</krakencore.version>
+        <configurate.version>4.1.2</configurate.version>
     </properties>
 
     <build>
@@ -135,6 +137,18 @@
             <artifactId>acf-paper</artifactId>
             <version>${acf.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarhatabaot</groupId>
+            <artifactId>KrakenCore</artifactId>
+            <version>${krakencore.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>${configurate.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
