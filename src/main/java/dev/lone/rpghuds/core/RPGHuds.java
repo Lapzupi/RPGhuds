@@ -93,11 +93,11 @@ public class RPGHuds {
     private void initHudNames() {
         this.hudsNames = new ArrayList<>();
         PlayerData playerData = datas.get(0);
-        if(playerData == null)
+        if (playerData == null)
             return;
 
-        for(String key: playerData.allHudsByNamespacedId.keySet()) {
-            if(!this.hudsNames.contains(key))
+        for (String key : playerData.allHudsByNamespacedId.keySet()) {
+            if (!this.hudsNames.contains(key))
                 this.hudsNames.add(key);
         }
     }
@@ -124,7 +124,9 @@ public class RPGHuds {
                 playerData.registerHud(hud, true);
             }
         }
-        plugin.getLogger().info(() -> "Loaded huds: %s for %s".formatted(player.getUniqueId(), playerData.allHudsByNamespacedId.keySet().toString()));
+        if (plugin.getSettings().isDebug()) {
+            plugin.getLogger().info(() -> "Loaded huds: %s for %s".formatted(player.getUniqueId(), playerData.allHudsByNamespacedId.keySet().toString()));
+        }
         datasByPlayer.put(player, playerData);
         datas.add(playerData);
     }
