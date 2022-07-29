@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
@@ -31,7 +32,7 @@ class EventsListener implements Listener {
     }
 
     @EventHandler
-    private void onItemsAdderLoad(PluginEnableEvent e) {
+    private void onItemsAdderLoad(@NotNull PluginEnableEvent e) {
         if (!e.getPlugin().getName().equals("ItemsAdder"))
             return;
 
@@ -45,7 +46,7 @@ class EventsListener implements Listener {
     }
 
     @EventHandler
-    private void onItemsAdderUnload(PluginDisableEvent e) {
+    private void onItemsAdderUnload(@NotNull PluginDisableEvent e) {
         if (!e.getPlugin().getName().equals("ItemsAdder"))
             return;
 
@@ -65,7 +66,8 @@ class EventsListener implements Listener {
             rpgHuds.notifyIazip = false;
         }
 
-        if (!rpgHuds.needsIaZip)
+        if (!rpgHuds.needsIaZip) {
             rpgHuds.initPlayer(e.getPlayer());
+        }
     }
 }
