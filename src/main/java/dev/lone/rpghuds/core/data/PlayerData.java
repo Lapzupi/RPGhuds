@@ -1,6 +1,7 @@
 package dev.lone.rpghuds.core.data;
 
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class PlayerData {
         refreshHuds(hudsHighFreq);
     }
 
-    private void refreshHuds(List<Hud<?>> huds) {
+    private void refreshHuds(@NotNull List<Hud<?>> huds) {
         boolean changedRenderAny = false;
         for (Hud<?> hud : huds) {
             if (hud.refreshRender() == Hud.RenderAction.SEND_REFRESH)

@@ -13,6 +13,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -40,8 +42,7 @@ public class RPGHuds {
     boolean notifyIazip;
     private boolean allPlayersInitialized;
 
-    //TODO: recode this shit. Very dirty
-    private final List<String> hudsNames = List.of("rpghuds:money", "rpghuds:compass");
+    private List<String> hudsNames;
 
 
     public RPGHuds(Main plugin) {
@@ -58,7 +59,6 @@ public class RPGHuds {
         return instance;
     }
 
-    //TODO: recode this shit. Very dirty
     public List<String> getHudsNames() {
         return hudsNames;
     }
@@ -82,13 +82,28 @@ public class RPGHuds {
             }
             scheduleRefresh();
             allPlayersInitialized = true;
+
         } catch (NullPointerException e) {
             plugin.getLogger().warning(WARNING);
         }
+
+        initHudNames();
     }
 
-    void initPlayer(Player player) {
+    private void initHudNames() {
+        this.hudsNames = new ArrayList<>();
+        PlayerData playerData = datas.get(0);
+        if(playerData == null)
+            return;
 
+        for(String key: playerData.allHudsByNamespacedId.keySet()) {
+            if(!this.hudsNames.contains(key))
+                this.hudsNames.add(key);
+        }
+    }
+
+
+    void initPlayer(Player player) {
         PlayerData playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
         for (HudConfig hudConfig : plugin.getSettings().getHudList()) {
             Hud<?> hud;
@@ -112,10 +127,10 @@ public class RPGHuds {
         plugin.getLogger().info(() -> "Loaded huds: %s for %s".formatted(player.getUniqueId(), playerData.allHudsByNamespacedId.keySet().toString()));
         datasByPlayer.put(player, playerData);
         datas.add(playerData);
-
     }
 
-    private Hud<?> getHudFromConfig(final PlayerHudsHolderWrapper holder, final HudConfig hudConfig) throws NullPointerException {
+    @Contract("_, null -> fail")
+    private @NotNull Hud<?> getHudFromConfig(final PlayerHudsHolderWrapper holder, final HudConfig hudConfig) throws NullPointerException {
         if (hudConfig instanceof MoneyHudConfig moneyHudConfig) {
             return new MoneyHud(
                     moneyHudConfig.getPapiPlaceholder(),
@@ -142,7 +157,6 @@ public class RPGHuds {
     //TODO: implement animated icons.
     // Warning: make sure to increment the refresh rate only when it's actually needed by the animation.
     // I don't want the plugin to become heavy just for a stupid animation.
-
     private void scheduleRefresh() {
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
@@ -170,24 +184,25 @@ public class RPGHuds {
 
         datas.clear();
         datasByPlayer.clear();
+        this.hudsNames = new ArrayList<>();
     }
 
     private void extractDefaultAssets() {
         CodeSource src = Main.class.getProtectionDomain().getCodeSource();
         if (src != null) {
-            File itemsadderRoot = new File(plugin.getDataFolder().getParent() + "/ItemsAdder");
+            File itemsAdderRoot = new File(plugin.getDataFolder().getParent() + "/ItemsAdder");
 
             URL jar = src.getLocation();
 
             try (ZipInputStream zip = new ZipInputStream(jar.openStream())) {
                 plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
                 while (true) {
-                    ZipEntry e = zip.getNextEntry();
-                    if (e == null)
+                    ZipEntry entry = zip.getNextEntry();
+                    if (entry == null)
                         break;
-                    String name = e.getName();
-                    if (!e.isDirectory() && name.startsWith("data/")) {
-                        File dest = new File(itemsadderRoot, name);
+                    String name = entry.getName();
+                    if (!entry.isDirectory() && name.startsWith("data/")) {
+                        File dest = new File(itemsAdderRoot, name);
                         if (!dest.exists()) {
                             FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
                             plugin.getLogger().info(() -> ChatColor.AQUA + "       - Extracted " + name);

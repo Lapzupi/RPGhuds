@@ -6,7 +6,6 @@ import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.commands.RPGHudsCommand;
 import dev.lone.rpghuds.core.config.Settings;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
@@ -49,6 +48,7 @@ public final class Main extends JavaPlugin {
         rpgHuds = new RPGHuds(this);
 
         PaperCommandManager paperCommandManager = new PaperCommandManager(this);
+        paperCommandManager.getCommandCompletions().registerCompletion("huds",c -> rpgHuds.getHudsNames());
         paperCommandManager.registerCommand(new RPGCompassCommand(this));
         paperCommandManager.registerCommand(new RPGHudsCommand(this));
     }

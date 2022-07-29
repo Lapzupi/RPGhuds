@@ -2,6 +2,7 @@ package dev.lone.rpghuds.core.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
@@ -31,6 +32,7 @@ public class RPGHudsCommand extends BaseCommand {
     }
 
     @Subcommand("show")
+    @CommandCompletion("@huds @players")
     @CommandPermission("rpghuds.show")
     public void onShow(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
         if (target == null) {
