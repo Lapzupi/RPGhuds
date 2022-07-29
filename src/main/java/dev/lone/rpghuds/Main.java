@@ -19,7 +19,7 @@ import org.spongepowered.configurate.ConfigurateException;
  * If it's heavier than the actual design please don't make any change.
  * Make sure your changes are actually optimized and perfectly usable in a large scale server.
  */
-public final class Main extends JavaPlugin implements Listener {
+public final class Main extends JavaPlugin {
     private static Main instance;
     private Settings settings;
     private static RPGHuds rpgHuds;
@@ -62,6 +62,7 @@ public final class Main extends JavaPlugin implements Listener {
         try {
             this.settings = new Settings(this);
             this.settings.saveDefaultConfig();
+            this.settings.reloadConfig();
         } catch (ConfigurateException e) {
 
         }
@@ -76,7 +77,7 @@ public final class Main extends JavaPlugin implements Listener {
     public void reloadPlugin() {
         rpgHuds.cleanup();
         initVaultEconomy();
-        initConfig();
+        settings.reloadConfig();
         rpgHuds.initAllPlayers();
     }
 }

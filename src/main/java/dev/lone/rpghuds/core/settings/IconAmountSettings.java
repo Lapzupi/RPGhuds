@@ -29,10 +29,10 @@ public class IconAmountSettings extends HudSettings {
 
     protected final HashMap<Character, FontImageWrapper> charMap = new HashMap<>();
 
-    public IconAmountSettings(final String namespacedId, final int initialOffsetX, final Set<String> worlds, @NotNull ImmutableMap<String, String> settingsMap) {
+    public IconAmountSettings(final String namespacedId, final int initialOffsetX, final List<String> worlds, final String iconPath,  @NotNull ImmutableMap<String, String> settingsMap) {
         super(namespacedId, initialOffsetX, worlds);
 
-        this.icon = getFontImage(settingsMap.get("icon"));
+        this.icon = getFontImage(iconPath);
         this.digit_0 = getFontImage(settingsMap.get("digit_0"));
         this.digit_1 = getFontImage(settingsMap.get("digit_1"));
         this.digit_2 = getFontImage(settingsMap.get("digit_2"));

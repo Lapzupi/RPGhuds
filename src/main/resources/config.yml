@@ -2,43 +2,40 @@ huds_refresh_interval_ticks: 15
 huds_high_frequency_refresh_interval_ticks: 1
 
 huds:
-  - money:
-      type: money
-      enabled: true
-      offset: 90
-      # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
-      papi_placeholder: "%vault_eco_balance_formatted%"
-      worlds:
-        - world
-        - world_nether
-        - world_the_end
-      settings:
-        namespaced_id: "rpghuds:money"
-        icon: "rpghuds:money_icon"
-  - cosmetic_coins:
-      type: money
-      enabled: true
-      offset: 30
-      # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
-      papi_placeholder: "%vault_eco_balance_formatted%"
-      worlds:
-        - world
-        - world_nether
-        - world_the_end
-      settings:
-        namespaced_id: "rpghuds:cosmetic_coin"
-        icon: "rpghuds:cosmetic_icon"
-  - compass:
-      type: compass
-      enabled: false
-      offset: 6
-      worlds:
-        - world
-        - world_nether
-        - world_the_end
-      settings:
-        namespaced_id: "rpghuds:compass"
-        compass_prefix: "rpghuds:hud_compass_"
+  - hud-type: "money"
+    enabled: true
+    offset: 90
+    # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
+    papi_placeholder: "%vault_eco_balance_formatted%"
+    worlds:
+      - world
+      - world_nether
+      - world_the_end
+    settings:
+      namespaced_id: "rpghuds:money"
+      icon: "rpghuds:money_icon"
+  - hud-type: "money"
+    enabled: true
+    offset: 30
+    # All money playerholders: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#vault
+    papi_placeholder: "%vault_eco_balance_formatted%"
+    worlds:
+      - world
+      - world_nether
+      - world_the_end
+    settings:
+      namespaced_id: "rpghuds:cosmetic_coin"
+      icon: "rpghuds:cosmetic_icon"
+  - hud-type: "compass"
+    enabled: false
+    offset: 6
+    worlds:
+      - world
+      - world_nether
+      - world_the_end
+    settings:
+      namespaced_id: "rpghuds:compass"
+      compass_prefix: "rpghuds:hud_compass_"
 types:
   money:
     digit_0: "rpghuds:money_digit_0"

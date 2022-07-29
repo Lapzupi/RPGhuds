@@ -2,10 +2,12 @@ package dev.lone.rpghuds.core;
 
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
+import dev.lone.rpghuds.core.config.CompassHudConfig;
 import dev.lone.rpghuds.core.config.HudConfig;
+import dev.lone.rpghuds.core.config.MoneyHudConfig;
 import dev.lone.rpghuds.core.data.*;
+import dev.lone.rpghuds.core.settings.MoneySettings;
 import dev.lone.rpghuds.core.settings.old.CompassSettingsOld;
-import dev.lone.rpghuds.core.settings.old.MoneySettingsOld;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,8 +21,8 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -75,8 +77,9 @@ public class RPGHuds {
             return;
         }
         try {
-            for (Player player : Bukkit.getServer().getOnlinePlayers())
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 initPlayer(player);
+            }
             scheduleRefresh();
             allPlayersInitialized = true;
         } catch (NullPointerException e) {
@@ -85,63 +88,55 @@ public class RPGHuds {
     }
 
     void initPlayer(Player player) {
-        PlayerData playerData;
-        try {
-            playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
-            //TODO: recode this shit. Very dirty
-            for(HudConfig hudConfig: plugin.getSettings().getHudList()) {
 
-            }
-            if (Main.getSettings().isMoneyEnabled()) {
-                playerData.registerHud(new MoneyHud(
-                        Main.getSettings().getMoneyPapi(),
-                        playerData.getHolder(),
-                        new MoneySettingsOld(
-                                "rpghuds:money",
-                                "rpghuds:money_icon",
-                                "rpghuds:money_digit_0",
-                                "rpghuds:money_digit_1",
-                                "rpghuds:money_digit_2",
-                                "rpghuds:money_digit_3",
-                                "rpghuds:money_digit_4",
-                                "rpghuds:money_digit_5",
-                                "rpghuds:money_digit_6",
-                                "rpghuds:money_digit_7",
-                                "rpghuds:money_digit_8",
-                                "rpghuds:money_digit_9",
-                                "rpghuds:money_char_unknown",
-                                "rpghuds:money_char_k",
-                                "rpghuds:money_char_m",
-                                "rpghuds:money_char_b",
-                                "rpghuds:money_char_t",
-                                "rpghuds:money_char_dot",
-                                "rpghuds:money_char_comma",
-                                "rpghuds:money_char_arrow_up",
-                                "rpghuds:money_char_arrow_down",
-                                Main.getSettings().getMoneyOffset(),
-                                new HashSet<>(Main.getSettings().getMoneyWorlds())
-                        )
-                ), false);
+        PlayerData playerData = new PlayerData(new PlayerHudsHolderWrapper(player));
+        for (HudConfig hudConfig : plugin.getSettings().getHudList()) {
+            Hud<?> hud;
+
+            try {
+                hud = getHudFromConfig(playerData.getHolder(), hudConfig);
+            } catch (NullPointerException e) {
+                plugin.getLogger().warning(() -> "Could not load hud %s for player %s".formatted(hudConfig.getNamespaceId(), player.getName()));
+                if (plugin.getSettings().isDebug()) {
+                    plugin.getLogger().log(Level.WARNING, "NullPointerException while obtaining hud.", e);
+                }
+                continue;
             }
 
-            //TODO: recode this shit. Very dirty
-            if (Main.getSettings().isCompassEnabled()) {
-                playerData.registerHud(new CompassHud(
-                        playerData.getHolder(),
-                        new CompassSettingsOld(
-                                "rpghuds:compass",
-                                "rpghuds:hud_compass_",
-                                Main.getSettings().getCompassOffset(),
-                                Main.getSettings().getCompassWorlds()
-                        )
-                ), true);
+            if (hud instanceof MoneyHud) {
+                playerData.registerHud(hud, false);
+            } else if (hud instanceof CompassHud) {
+                playerData.registerHud(hud, true);
             }
-
-            datasByPlayer.put(player, playerData);
-            datas.add(playerData);
-        } catch (NullPointerException exc) {
-            Main.inst().getLogger().severe(ChatColor.RED + "Failed to load PlayerData: " + exc.getMessage());
         }
+        plugin.getLogger().info(() -> "Loaded huds: %s for %s".formatted(player.getUniqueId(), playerData.allHudsByNamespacedId.keySet().toString()));
+        datasByPlayer.put(player, playerData);
+        datas.add(playerData);
+
+    }
+
+    private Hud<?> getHudFromConfig(final PlayerHudsHolderWrapper holder, final HudConfig hudConfig) throws NullPointerException {
+        if (hudConfig instanceof MoneyHudConfig moneyHudConfig) {
+            return new MoneyHud(
+                    moneyHudConfig.getPapiPlaceholder(),
+                    holder,
+                    new MoneySettings(moneyHudConfig.getNamespaceId(),
+                            moneyHudConfig.getOffset(),
+                            moneyHudConfig.getWorlds(),
+                            moneyHudConfig.getIcon(),
+                            plugin.getSettings().getMoneyType(), plugin.getSettings().getMoneyType()));
+        }
+        if (hudConfig instanceof CompassHudConfig compassHudConfig) {
+            return new CompassHud(
+                    holder,
+                    new CompassSettingsOld(
+                            "rpghuds:compass",
+                            "rpghuds:hud_compass_",
+                            compassHudConfig.getOffset(),
+                            compassHudConfig.getWorlds()
+                    ));
+        }
+        throw new NullPointerException();
     }
 
     //TODO: implement animated icons.
@@ -152,12 +147,12 @@ public class RPGHuds {
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
                 data.refreshAllHuds();
-        }, Main.getSettings().getRefreshIntervalTicks(), Main.getSettings().getRefreshIntervalTicks()));
+        }, plugin.getSettings().getRefreshIntervalTicks(), plugin.getSettings().getRefreshIntervalTicks()));
 
         refreshTasks.add(Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (PlayerData data : datas)
                 data.refreshHighFrequency();
-        }, Main.getSettings().getRefreshHighFrequencyIntervalTicks(), Main.getSettings().getRefreshHighFrequencyIntervalTicks()));
+        }, plugin.getSettings().getRefreshHighFrequencyIntervalTicks(), plugin.getSettings().getRefreshHighFrequencyIntervalTicks()));
     }
 
     void unregisterAllPlayers() {
@@ -184,7 +179,7 @@ public class RPGHuds {
 
             URL jar = src.getLocation();
 
-            try (ZipInputStream zip = new ZipInputStream(jar.openStream())){
+            try (ZipInputStream zip = new ZipInputStream(jar.openStream())) {
                 plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
                 while (true) {
                     ZipEntry e = zip.getNextEntry();

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
@@ -21,9 +22,9 @@ public class MoneySettings extends IconAmountSettings{
     private final FontImageWrapper char_arrow_up;
     private final FontImageWrapper char_arrow_down;
 
-    public MoneySettings(final String namespacedId, final int initialOffsetX, final Set<String> worlds,
+    public MoneySettings(final String namespacedId, final int initialOffsetX, final List<String> worlds, final String iconPath,
                          @NotNull final ImmutableMap<String, String> settingsMap, @NotNull final ImmutableMap<String, String> charSettings) {
-        super(namespacedId, initialOffsetX, worlds, settingsMap);
+        super(namespacedId, initialOffsetX, worlds, iconPath, settingsMap);
 
         this.char_k = getFontImage(charSettings.get("char_k"));
         this.char_m = getFontImage(charSettings.get("char_m"));
