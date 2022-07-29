@@ -4,6 +4,7 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import dev.lone.itemsadder.api.FontImages.PlayerCustomHudWrapper;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.core.settings.HudSettings;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +12,19 @@ import java.util.List;
 public abstract class Hud<T extends HudSettings> {
     public final T hudSettings;
     boolean hidden;
-
     public final PlayerHudsHolderWrapper holder;
-    final PlayerCustomHudWrapper hud;
-    final int initialXOffset;
+    protected final PlayerCustomHudWrapper customHudWrapper;
+    private final int initialXOffset;
 
-    final List<FontImageWrapper> imgsBuffer;
+    protected final List<FontImageWrapper> imgsBuffer;
 
-    public Hud(PlayerHudsHolderWrapper holder, T settings) {
+    protected Hud(PlayerHudsHolderWrapper holder, @NotNull T settings) {
         this.imgsBuffer = new ArrayList<>();
         this.holder = holder;
-        this.hud = settings.newInstanceByPlayer(holder);
+        this.customHudWrapper = settings.newInstanceByPlayer(holder);
         this.hudSettings = settings;
         this.initialXOffset = settings.initialOffsetX;
-        hud.setOffsetX(initialXOffset);
+        this.customHudWrapper.setOffsetX(initialXOffset);
     }
 
     public abstract RenderAction refreshRender(boolean force);
@@ -42,7 +42,7 @@ public abstract class Hud<T extends HudSettings> {
     }
 
     public void hide(boolean hide) {
-        hud.setVisible(!hide);
+        customHudWrapper.setVisible(!hide);
         refreshRender(); // Is this call needed?
     }
 
@@ -66,7 +66,7 @@ public abstract class Hud<T extends HudSettings> {
         int offset = initialOffset;
         for (FontImageWrapper img : imgsBuffer)
             offset -= img.getWidth();
-        hud.setOffsetX(offset);
+        customHudWrapper.setOffsetX(offset);
     }
 
     enum RenderAction {

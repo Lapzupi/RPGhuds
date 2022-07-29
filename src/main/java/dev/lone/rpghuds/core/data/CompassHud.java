@@ -23,14 +23,13 @@ public class CompassHud extends Hud<CompassSettingsOld> {
 
     BukkitTask endSchedule;
 
-    public CompassHud(PlayerHudsHolderWrapper holder,
-                      CompassSettingsOld settings) throws NullPointerException {
+    public CompassHud(PlayerHudsHolderWrapper holder, CompassSettingsOld settings) throws NullPointerException {
         super(holder, settings);
         player = holder.getPlayer();
 
         // To init the size of the buffer and avoid NullPointerException
         imgsBuffer.add(settings.compassIcons.get(0));
-        hud.setVisible(true);
+        customHudWrapper.setVisible(true);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class CompassHud extends Hud<CompassSettingsOld> {
             return RenderAction.HIDDEN;
 
         if (!hudSettings.worlds.contains(player.getWorld().getName())) {
-            hud.setVisible(false);
+            customHudWrapper.setVisible(false);
             return RenderAction.HIDDEN;
         }
 
@@ -89,7 +88,7 @@ public class CompassHud extends Hud<CompassSettingsOld> {
 
     @Override
     public void deleteRender() {
-        hud.clearFontImagesAndRefresh();
+        customHudWrapper.clearFontImagesAndRefresh();
 
         if (endSchedule != null)
             endSchedule.cancel();
@@ -98,7 +97,7 @@ public class CompassHud extends Hud<CompassSettingsOld> {
 
     private void setImg(FontImageWrapper img) {
         imgsBuffer.set(0, img);
-        hud.setFontImages(imgsBuffer);
+        customHudWrapper.setFontImages(imgsBuffer);
     }
 
     private double getAngle() {
@@ -112,7 +111,7 @@ public class CompassHud extends Hud<CompassSettingsOld> {
 
     public void removeDestination() {
         destination = null;
-        hud.clearFontImagesAndRefresh();
+        customHudWrapper.clearFontImagesAndRefresh();
         holder.sendUpdate();
     }
 

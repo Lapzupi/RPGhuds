@@ -4,7 +4,6 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.settings.MoneySettings;
-import dev.lone.rpghuds.core.settings.old.MoneySettingsOld;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,7 +30,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
 
         this.prevBalance = Main.econ.getBalance(player);
 
-        hud.setVisible(true);
+        customHudWrapper.setVisible(true);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
             return RenderAction.HIDDEN;
 
         if (!hudSettings.worlds.contains(player.getWorld().getName())) {
-            hud.setVisible(false); //I think this will cause problems
+            customHudWrapper.setVisible(false); //I think this will cause problems
             return RenderAction.HIDDEN;
         }
 
@@ -94,7 +93,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         hudSettings.appendAmountToImages(amount, imgsBuffer);
         imgsBuffer.add(hudSettings.getIcon());
 
-        hud.setFontImages(imgsBuffer);
+        customHudWrapper.setFontImages(imgsBuffer);
 
         adjustOffset();
 
@@ -105,7 +104,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
 
     @Override
     public void deleteRender() {
-        hud.clearFontImagesAndRefresh();
+        customHudWrapper.clearFontImagesAndRefresh();
 
         if (arrowRemoveSchedule != null)
             arrowRemoveSchedule.cancel();
