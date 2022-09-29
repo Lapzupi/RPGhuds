@@ -46,6 +46,10 @@ public abstract class Hud<T extends HudSettings> {
         refreshRender(); // Is this call needed?
     }
 
+    public void toggle() {
+        hide(!customHudWrapper.isVisible());
+    }
+
     /**
      * Call this if:
      * - HUD is on the left part of the screen and has text on the left side of the HUD
