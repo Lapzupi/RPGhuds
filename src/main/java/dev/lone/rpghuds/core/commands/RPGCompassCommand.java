@@ -12,6 +12,7 @@ import dev.lone.rpghuds.core.data.CompassHud;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author sarhatabaot
@@ -28,7 +29,7 @@ public class RPGCompassCommand extends BaseCommand {
     @Subcommand("set")
     @CommandPermission("rpghuds.compass.set")
     @CommandCompletion("@players @worlds")
-    public void onSet(final CommandSender sender, final OnlinePlayer player, final World world, final int x, final int y, final int z) {
+    public void onSet(final CommandSender sender, final @NotNull OnlinePlayer player, final World world, final int x, final int y, final int z) {
         Location location = new Location(world, x, y, z);
 
         CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), COMPASS_ID);
@@ -43,7 +44,7 @@ public class RPGCompassCommand extends BaseCommand {
 
     @Subcommand("remove")
     @CommandPermission("rpghuds.compass.remove")
-    public void onRemove(final CommandSender sender, final OnlinePlayer player) {
+    public void onRemove(final CommandSender sender, final @NotNull OnlinePlayer player) {
         CompassHud hud = (CompassHud) RPGHuds.inst().getPlayerHud(player.getPlayer(), COMPASS_ID);
         if (hud == null) {
             sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
