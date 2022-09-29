@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 public class RPGHudsCommand extends BaseCommand {
     private final Main plugin;
 
+    private static final String MUST_BE_PLAYER = "You must be player to execute this command without specifying a target.";
+
     public RPGHudsCommand(final Main plugin) {
         this.plugin = plugin;
     }
@@ -41,13 +43,47 @@ public class RPGHudsCommand extends BaseCommand {
             sender.sendMessage(ChatColor.GREEN + "Reloaded");
     }
 
+    @Subcommand("toggle")
+    @CommandCompletion("@huds @players")
+    @Description("Toggles the state of a given hud.")
+    public void onToggle(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
+        if (target == null) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(MUST_BE_PLAYER);
+                return;
+            }
+
+
+            Hud<?> playerHud = RPGHuds.inst().getPlayerHud(player, hudId);
+            if (playerHud == null) {
+                sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
+                return;
+            }
+
+            playerHud.toggle();
+            return;
+        }
+
+        if (!sender.hasPermission("rpghuds.toggle.others")) {
+            sender.sendMessage(ChatColor.RED + "No permission rpghuds.toggle.others");
+            return;
+        }
+        Hud<?> playerHud = RPGHuds.inst().getPlayerHud(target.getPlayer(), hudId);
+        if (playerHud == null) {
+            sender.sendMessage(plugin.getSettings().getMsgHudNotFound());
+            return;
+        }
+
+        playerHud.toggle();
+    }
+
     @Subcommand("show")
     @CommandCompletion("@huds @players")
     @CommandPermission("rpghuds.show")
     public void onShow(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
         if (target == null) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("You must be player to execute this command without specifying a target.");
+                sender.sendMessage(MUST_BE_PLAYER);
                 return;
             }
 
@@ -81,7 +117,7 @@ public class RPGHudsCommand extends BaseCommand {
     public void onHide(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
         if (target == null) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("You must be player to execute this command without specifying a target.");
+                sender.sendMessage(MUST_BE_PLAYER);
                 return;
             }
 
