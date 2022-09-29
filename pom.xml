@@ -6,7 +6,7 @@
 
     <groupId>dev.lone</groupId>
     <artifactId>rpghuds</artifactId>
-    <version>1.1.0-l</version>
+    <version>1.2.0-l</version>
     <packaging>jar</packaging>
 
     <name>RPGhuds</name>
@@ -17,13 +17,13 @@
 
         <!-- Bukkit Libs -->
         <spigot.api.version>1.19-R0.1-SNAPSHOT</spigot.api.version>
-        <itemsadder.api.version>3.2.2-beta5_2</itemsadder.api.version>
+        <itemsadder.api.version>3.2.3c</itemsadder.api.version>
         <placeholder.api.version>2.11.2</placeholder.api.version>
         <vault.api.version>1.7.1</vault.api.version>
         <acf.version>0.5.1-SNAPSHOT</acf.version>
         <!-- Maven Plugin -->
         <maven.compiler.version>3.10.1</maven.compiler.version>
-        <maven.shade.version>3.3.0</maven.shade.version>
+        <maven.shade.version>3.4.0</maven.shade.version>
         <!-- Libs -->
         <commons.io.version>2.11.0</commons.io.version>
         <krakencore.version>1.5.5</krakencore.version>

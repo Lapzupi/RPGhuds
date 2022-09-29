@@ -18,7 +18,7 @@ import org.bukkit.command.CommandSender;
  */
 @CommandAlias("rpgcompass")
 public class RPGCompassCommand extends BaseCommand {
-    private Main plugin;
+    private final Main plugin;
     private static final String COMPASS_ID = "rpghuds:compass";
 
     public RPGCompassCommand(final Main plugin) {

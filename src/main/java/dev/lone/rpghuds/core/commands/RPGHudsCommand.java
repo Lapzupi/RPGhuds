@@ -4,15 +4,18 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.RPGHuds;
+import dev.lone.rpghuds.core.config.HudConfig;
 import dev.lone.rpghuds.core.data.Hud;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @CommandAlias("rpghuds")
 public class RPGHudsCommand extends BaseCommand {
@@ -20,6 +23,13 @@ public class RPGHudsCommand extends BaseCommand {
 
     public RPGHudsCommand(final Main plugin) {
         this.plugin = plugin;
+    }
+
+    @Subcommand("list")
+    @CommandPermission("rpghuds.list")
+    @Description("List all potential huds.")
+    public void onList(final @NotNull CommandSender sender) {
+        sender.sendMessage(this.plugin.getSettings().getHudList().stream().map(HudConfig::getNamespaceId).toList().toArray(new String[]{}));
     }
 
     @Subcommand("reload")
@@ -51,6 +61,7 @@ public class RPGHudsCommand extends BaseCommand {
             playerHud.show();
             return;
         }
+
         if (!sender.hasPermission("rpghuds.show.others")) {
             sender.sendMessage(ChatColor.RED + "No permission rpghuds.show.others");
             return;
@@ -67,12 +78,13 @@ public class RPGHudsCommand extends BaseCommand {
 
     @Subcommand("hide")
     @CommandPermission("rpghuds.hide")
-    public void onHide(final CommandSender sender, final OnlinePlayer target, final String hudId) {
-        if (sender instanceof Player player && player != target.getPlayer()) {
-            if (!player.hasPermission("rpghuds.hide.others")) {
-                sender.sendMessage(ChatColor.RED + "No permission rpghuds.hide.others");
+    public void onHide(final CommandSender sender, final String hudId, @Optional final OnlinePlayer target) {
+        if (target == null) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage("You must be player to execute this command without specifying a target.");
                 return;
             }
+
 
             Hud<?> playerHud = RPGHuds.inst().getPlayerHud(player, hudId);
             if (playerHud == null) {
@@ -84,6 +96,10 @@ public class RPGHudsCommand extends BaseCommand {
             return;
         }
 
+        if (!sender.hasPermission("rpghuds.hide.others")) {
+            sender.sendMessage(ChatColor.RED + "No permission rpghuds.hide.others");
+            return;
+        }
 
         Hud<?> playerHud = RPGHuds.inst().getPlayerHud(target.getPlayer(), hudId);
         if (playerHud == null) {

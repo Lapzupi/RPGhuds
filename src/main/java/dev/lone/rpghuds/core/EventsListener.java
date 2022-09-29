@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -32,8 +31,8 @@ class EventsListener implements Listener {
     }
 
     @EventHandler
-    private void onItemsAdderLoad(@NotNull PluginEnableEvent e) {
-        if (!e.getPlugin().getName().equals("ItemsAdder"))
+    private void onItemsAdderLoad(@NotNull PluginEnableEvent event) {
+        if (!event.getPlugin().getName().equals("ItemsAdder"))
             return;
 
         if (plugin.getSettings().isDebug())
@@ -60,14 +59,14 @@ class EventsListener implements Listener {
     }
 
     @EventHandler
-    private void onJoin(PlayerJoinEvent e) {
-        if (rpgHuds.notifyIazip && e.getPlayer().isOp()) {
-            Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().sendMessage(ChatColor.RED + RPGHuds.WARNING), 60L);
+    private void onJoin(PlayerJoinEvent event) {
+        if (rpgHuds.notifyIazip && event.getPlayer().isOp()) {
+            Bukkit.getScheduler().runTaskLater(plugin, () -> event.getPlayer().sendMessage(ChatColor.RED + RPGHuds.WARNING), 60L);
             rpgHuds.notifyIazip = false;
         }
 
         if (!rpgHuds.needsIaZip) {
-            rpgHuds.initPlayer(e.getPlayer());
+            rpgHuds.initPlayer(event.getPlayer());
         }
     }
 }

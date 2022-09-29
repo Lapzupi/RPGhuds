@@ -77,7 +77,7 @@ public final class Main extends JavaPlugin {
     public void reloadPlugin() {
         rpgHuds.cleanup();
         initVaultEconomy();
-        settings.reloadConfig();
+        this.settings.reloadConfig();
         rpgHuds.initAllPlayers();
     }
 }
