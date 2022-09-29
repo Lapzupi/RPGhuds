@@ -10,4 +10,6 @@ public abstract class PAPIHud<T extends HudSettings> extends Hud<T> {
         super(holder, settings);
         this.placeholder = placeholder;
     }
+
+
 }

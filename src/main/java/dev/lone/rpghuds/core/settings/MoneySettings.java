@@ -5,7 +5,6 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 

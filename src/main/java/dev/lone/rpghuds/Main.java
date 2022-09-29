@@ -4,6 +4,7 @@ import co.aikar.commands.PaperCommandManager;
 import dev.lone.rpghuds.core.commands.RPGCompassCommand;
 import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.commands.RPGHudsCommand;
+import dev.lone.rpghuds.core.config.HudConfig;
 import dev.lone.rpghuds.core.config.Settings;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -48,7 +49,7 @@ public final class Main extends JavaPlugin {
         rpgHuds = new RPGHuds(this);
 
         PaperCommandManager paperCommandManager = new PaperCommandManager(this);
-        paperCommandManager.getCommandCompletions().registerCompletion("huds",c -> rpgHuds.getHudsNames());
+        paperCommandManager.getCommandCompletions().registerCompletion("huds",c -> settings.getHudList().stream().map(HudConfig::getNamespaceId).toList());
         paperCommandManager.registerCommand(new RPGCompassCommand(this));
         paperCommandManager.registerCommand(new RPGHudsCommand(this));
     }
@@ -64,7 +65,7 @@ public final class Main extends JavaPlugin {
             this.settings.saveDefaultConfig();
             this.settings.reloadConfig();
         } catch (ConfigurateException e) {
-
+            //log later
         }
     }
 
