@@ -4,10 +4,8 @@ import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import dev.lone.rpghuds.core.settings.HudSettings;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
 

@@ -5,10 +5,8 @@ import com.github.sarhatabaot.kraken.core.config.YamlConfigurateFile;
 import com.google.common.collect.ImmutableMap;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.utils.Utilz;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -16,10 +14,8 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Settings extends YamlConfigurateFile<Main> {
     private long refreshIntervalTicks;
