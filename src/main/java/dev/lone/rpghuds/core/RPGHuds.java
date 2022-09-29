@@ -90,16 +90,9 @@ public class RPGHuds {
         initHudNames();
     }
 
+    //todo compare this with config.yml to ensure huds are properly loaded.
     private void initHudNames() {
-        this.hudsNames = new ArrayList<>();
-        PlayerData playerData = datas.get(0);
-        if (playerData == null)
-            return;
-
-        for (String key : playerData.allHudsByNamespacedId.keySet()) {
-            if (!this.hudsNames.contains(key))
-                this.hudsNames.add(key);
-        }
+        this.hudsNames = plugin.getSettings().getHudList().stream().map(HudConfig::getNamespaceId).toList();
     }
 
 
@@ -189,6 +182,7 @@ public class RPGHuds {
         this.hudsNames = new ArrayList<>();
     }
 
+    //todo do something about this, we commonly use this at least in 2 plugins
     private void extractDefaultAssets() {
         CodeSource src = Main.class.getProtectionDomain().getCodeSource();
         if (src != null) {
