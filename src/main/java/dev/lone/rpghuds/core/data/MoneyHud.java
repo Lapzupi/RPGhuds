@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MoneyHud extends PAPIHud<MoneySettings> {
@@ -70,7 +71,8 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         }
 
         //TODO: better abstract logic: HudDataProvider ???
-        String amount = PlaceholderAPI.setPlaceholders(holder.getPlayer(), placeholder);
+        String amount = placeholderHack(PlaceholderAPI.setPlaceholders(holder.getPlayer(), placeholder));
+
         if (!forceRender && currentArrow == null && amount.equals(prevAmount))
             return RenderAction.SAME_AS_BEFORE;
 
@@ -100,6 +102,14 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         prevAmount = amount;
 
         return RenderAction.SEND_REFRESH;
+    }
+
+    //Prevents unknown char from placeholder
+    private @NotNull String placeholderHack(final @NotNull String placeholder) {
+        if(placeholder.contains("$")) {
+            return placeholder.replace("$","");
+        }
+        return placeholder;
     }
 
     @Override
