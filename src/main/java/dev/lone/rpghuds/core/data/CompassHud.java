@@ -139,7 +139,7 @@ public class CompassHud extends Hud<CompassSettingsOld> {
         Runnable callback;
 
         /**
-         * Rappresents a destination.
+         * Represents a destination.
          *
          * @param loc      location to reach.
          * @param callback callback to be executed when the destination is reached, can be null.
