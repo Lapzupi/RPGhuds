@@ -39,6 +39,12 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         return refreshRender(false);
     }
 
+    private FontImageWrapper getArrowState(double balance) {
+        if (balance > prevBalance)
+            return hudSettings.getChar_arrow_up();
+        return hudSettings.getChar_arrow_down();
+    }
+
     @Override
     public RenderAction refreshRender(boolean forceRender) {
         if (hidden)
@@ -49,14 +55,10 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
             return RenderAction.HIDDEN;
         }
 
-        if (Main.econ != null) {
+        if (isVault()) {
             double balance = Main.econ.getBalance(player);
             if (balance != prevBalance) {
-                if (balance > prevBalance)
-                    currentArrow = hudSettings.getChar_arrow_up();
-                else
-                    currentArrow = hudSettings.getChar_arrow_down();
-
+                currentArrow = getArrowState(balance);
                 prevBalance = balance;
 
                 if (arrowRemoveSchedule != null)
@@ -70,10 +72,10 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
             }
         }
 
-        //TODO: better abstract logic: HudDataProvider ???
+
         String amount = placeholderHack(PlaceholderAPI.setPlaceholders(holder.getPlayer(), placeholder));
 
-        if (!forceRender && currentArrow == null && amount.equals(prevAmount))
+        if (isSameAsBefore(amount,forceRender))
             return RenderAction.SAME_AS_BEFORE;
 
         //TODO: Shit, recode this. PAPI doesn't allow me to preemptively check if a placeholder is working or not.
@@ -104,10 +106,19 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         return RenderAction.SEND_REFRESH;
     }
 
+    private boolean isVault() {
+        return placeholder.contains("vault") && Main.econ != null;
+    }
+
+    private boolean isSameAsBefore(final String amount,final boolean forceRender) {
+        return !forceRender && currentArrow == null && amount.equals(prevAmount);
+    }
+
+
     //Prevents unknown char from placeholder
     private @NotNull String placeholderHack(final @NotNull String placeholder) {
-        if(placeholder.contains("$")) {
-            return placeholder.replace("$","");
+        if (placeholder.contains("$")) {
+            return placeholder.replace("$", "");
         }
         return placeholder;
     }

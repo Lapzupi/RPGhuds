@@ -69,4 +69,5 @@ class EventsListener implements Listener {
             rpgHuds.initPlayer(event.getPlayer());
         }
     }
+
 }
