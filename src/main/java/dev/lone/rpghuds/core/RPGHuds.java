@@ -197,7 +197,7 @@ public class RPGHuds {
                     if (entry == null)
                         break;
                     String name = entry.getName();
-                    if (!entry.isDirectory() && name.startsWith("data/")) {
+                    if (!entry.isDirectory() && name.startsWith("contents/")) {
                         File dest = new File(itemsAdderRoot, name);
                         if (!dest.exists()) {
                             FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
