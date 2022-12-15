@@ -5,5 +5,4 @@ Customized HUDs for ItemsAdder
 - Money indicator (PlaceholderAPI)
 
 ![](https://i.imgur.com/9f5Wnk2.gif)
-![](https://i.imgur.com/1QDv4Ga.gif)
-![](https://i.imgur.com/yMq1IJO.png)
+![](./media/underwaterhud.gif)
