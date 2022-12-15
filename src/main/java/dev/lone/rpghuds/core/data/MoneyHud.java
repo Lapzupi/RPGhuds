@@ -50,6 +50,13 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
         if (hidden)
             return RenderAction.HIDDEN;
 
+        if(player.getRemainingAir() < player.getMaximumAir()) {
+            customHudWrapper.setVisible(false);
+            return RenderAction.HIDDEN;
+        } else {
+            customHudWrapper.setVisible(true);
+        }
+
         if (!hudSettings.worlds.contains(player.getWorld().getName())) {
             customHudWrapper.setVisible(false); //I think this will cause problems
             return RenderAction.HIDDEN;
@@ -115,7 +122,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
     }
 
 
-    //Prevents unknown char from placeholder
+    //Prevents unknown char from placeholder, dirty
     private @NotNull String placeholderHack(final @NotNull String placeholder) {
         if (placeholder.contains("$")) {
             return placeholder.replace("$", "");

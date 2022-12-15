@@ -27,7 +27,6 @@ class EventsListener implements Listener {
     public void registerListener() {
         EventsUtil.registerEventOnce(this, plugin);
         itemsAdderLoadListener.registerListener();
-
     }
 
     @EventHandler

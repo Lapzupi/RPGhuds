@@ -51,6 +51,9 @@ public class CompassHud extends Hud<CompassSettingsOld> {
         if (player.getLocation().getWorld() == null)
             return RenderAction.HIDDEN;
 
+        if(player.getRemainingAir() < player.getMaximumAir())
+            return RenderAction.HIDDEN;
+
         if (!player.getLocation().getWorld().equals(destination.loc.getWorld())) {
             setImg(hudSettings.iconDiffWorld);
             return RenderAction.SEND_REFRESH;
