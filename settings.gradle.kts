@@ -9,7 +9,7 @@ dependencyResolutionManagement {
             library("placeholder-api", "me.clip:placeholderapi:2.11.3")
             library("commands-paper", "co.aikar:acf-paper:0.5.1-SNAPSHOT")
             library("commons-io", "commons-io:commons-io:2.11.0")
-            library("lapzupi-config","com.github.Lapzupi:LapzupiConfig:1.1.0")
+            library("lapzupi-config","com.github.Lapzupi:LapzupiConfig:1.1.1")
             library("configurate-yaml", "org.spongepowered:configurate-yaml:4.1.2")
         }
     }

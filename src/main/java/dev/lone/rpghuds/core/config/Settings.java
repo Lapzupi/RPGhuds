@@ -1,8 +1,9 @@
 package dev.lone.rpghuds.core.config;
 
-import com.github.sarhatabaot.kraken.core.config.Transformation;
-import com.github.sarhatabaot.kraken.core.config.YamlConfigurateFile;
+
 import com.google.common.collect.ImmutableMap;
+import com.lapzupi.dev.config.Transformation;
+import com.lapzupi.dev.config.YamlConfigurateFile;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.utils.Utilz;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,6 +13,7 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -61,15 +63,14 @@ public class Settings extends YamlConfigurateFile<Main> {
         }
         return builder.build();
     }
-
+    
+    
     @Override
-    protected void builderOptions() {
-        loaderBuilder.defaultOptions(options -> options.serializers(builder ->
-                builder.registerExact(HudType.class, new HudTypeSerializer())
-                .registerExact(HudConfig.class, new HudConfigTypeSerializer())));
-        //nothing
+    protected void builderOptions(TypeSerializerCollection.Builder builder) {
+            builder.registerExact(HudType.class, new HudTypeSerializer())
+                .registerExact(HudConfig.class, new HudConfigTypeSerializer());
     }
-
+    
     @Override
     protected Transformation getTransformation() {
         return null;

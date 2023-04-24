@@ -106,10 +106,10 @@ public class CompassHud extends Hud<CompassSettingsOld> {
     private double getAngle() {
         Location startLoc = player.getEyeLocation();
         // vector: start to destination
-        Vector b = destination.loc.toVector().subtract(startLoc.toVector()).normalize();
+        Vector startToDestination = destination.loc.toVector().subtract(startLoc.toVector()).normalize();
         // vector: start to looking direction (a.length == b.length)
-        Vector a = player.getEyeLocation().getDirection().clone().setY(0);
-        return calculateAngleBetweenVectors(b, a);
+        Vector startToLookingDirection = player.getEyeLocation().getDirection().clone().setY(0);
+        return calculateAngleBetweenVectors(startToDestination, startToLookingDirection);
     }
 
     public void removeDestination() {
