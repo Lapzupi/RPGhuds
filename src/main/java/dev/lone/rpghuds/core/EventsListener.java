@@ -5,6 +5,7 @@ import dev.lone.rpghuds.utils.EventsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
@@ -50,8 +51,8 @@ class EventsListener implements Listener {
 
         if (plugin.getSettings().isDebug())
             plugin.getLogger().log(Level.INFO, "RPGhuds - detected ItemsAdder unload...");
-
-        EventsUtil.unregisterEvent(itemsAdderLoadListener);
+        
+        HandlerList.unregisterAll(itemsAdderLoadListener);
         itemsAdderLoadListener = null;
 
         rpgHuds.cleanup();

@@ -1,8 +1,6 @@
 package dev.lone.rpghuds.utils;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -15,15 +13,5 @@ public class EventsUtil {
                 return;
         Bukkit.getPluginManager().registerEvents(li, plugin);
     }
-
-    public static void unregisterEvent(Listener li) {
-        HandlerList.unregisterAll(li);
-    }
-
-    public static boolean call(Event e) {
-        Bukkit.getPluginManager().callEvent(e);
-        if (e instanceof Cancellable cancellable)
-            return !cancellable.isCancelled();
-        return true;
-    }
+    
 }
