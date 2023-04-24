@@ -40,8 +40,9 @@ public class CompassHud extends Hud<CompassSettingsOld> {
         if (hidden || destination == null)
             return RenderAction.HIDDEN;
 
-        if (!hudSettings.worlds.contains(player.getWorld().getName())) {
-            customHudWrapper.setVisible(false);
+        if (!hudSettings.isEnabledInWorld(player.getWorld()))
+        {
+            hud.setVisible(false);
             return RenderAction.HIDDEN;
         }
 

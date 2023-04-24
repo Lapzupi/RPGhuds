@@ -196,19 +196,48 @@ public class RPGHuds {
                     ZipEntry entry = zip.getNextEntry();
                     if (entry == null)
                         break;
-                    String name = entry.getName();
-                    if (!entry.isDirectory() && name.startsWith("contents/")) {
-                        File dest = new File(itemsAdderRoot, name);
-                        if (!dest.exists()) {
-                            FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
-                            plugin.getLogger().info(() -> ChatColor.AQUA + "       - Extracted " + name);
-                            needsIaZip = true;
-                        }
-                    }
-                }
-                plugin.getLogger().info(ChatColor.GREEN + "DONE extracting assets!");
+                        //TODO !!!
+//                     String name = entry.getName();
+//                     if (!entry.isDirectory() && name.startsWith("contents/")) {
+//                         File dest = new File(itemsAdderRoot, name);
+//                         if (!dest.exists()) {
+//                             FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
+//                             plugin.getLogger().info(() -> ChatColor.AQUA + "       - Extracted " + name);
+//                             needsIaZip = true;
+// =======
 
-            } catch (IOException e) {
+//                     String name = e.getName();
+//                     if (!e.isDirectory())
+//                     {
+//                         if (name.startsWith("contents/rpghuds/configs"))
+//                         {
+//                             doExtractFile(itemsadderRoot, name, name);
+//                         }
+//                         else
+//                         {
+//                             if (Main.settings.legacyTextures)
+//                             {
+//                                 if (name.startsWith("contents/rpghuds/textures_legacy"))
+//                                 {
+//                                     doExtractFile(itemsadderRoot, name, name.replace("textures_legacy", "textures"));
+//                                 }
+//                             }
+//                             else
+//                             {
+//                                 if (name.startsWith("contents/rpghuds/textures_new"))
+//                                 {
+//                                     doExtractFile(itemsadderRoot, name, name.replace("textures_new", "textures"));
+//                                 }
+//                             }
+// >>>>>>> upstream/master
+//                         }
+//                     }
+//                 }
+
+                plugin.getLogger().info(ChatColor.GREEN + "DONE extracting assets!");
+            }
+            catch (IOException e)
+            {
                 plugin.getLogger().severe("        ERROR EXTRACTING assets! StackTrace:");
                 e.printStackTrace();
             }
@@ -217,5 +246,16 @@ public class RPGHuds {
         notifyIazip = needsIaZip;
         if (needsIaZip)
             plugin.getLogger().warning(WARNING);
+    }
+
+    private void doExtractFile(File itemsadderRoot, String name, String destName) throws IOException
+    {
+        File dest = new File(itemsadderRoot, destName);
+        if (!dest.exists())
+        {
+            FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
+            plugin.getLogger().info(ChatColor.AQUA + "       - Extracted " + destName);
+            needsIaZip = true;
+        }
     }
 }
