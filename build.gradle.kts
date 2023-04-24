@@ -30,6 +30,19 @@ dependencies {
     library(libs.commons.io)
 }
 
+
+bukkit {
+    name = "LapzupiHuds"
+    authors = listOf("LoneDev", "sarhatabaot")
+    main = "dev.lone.rpghuds.Main"
+    version = project.version.toString()
+    
+    depend = listOf("ItemsAdder", "PlaceholderAPI")
+    softDepend = listOf("Vault")
+    apiVersion = "1.19"
+}
+
+
 tasks {
     build {
         dependsOn(shadowJar)
