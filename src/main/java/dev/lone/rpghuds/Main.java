@@ -1,7 +1,6 @@
 package dev.lone.rpghuds;
 
 import co.aikar.commands.PaperCommandManager;
-import dev.lone.rpghuds.core.commands.RPGCompassCommand;
 import dev.lone.rpghuds.core.RPGHuds;
 import dev.lone.rpghuds.core.commands.RPGHudsCommand;
 import dev.lone.rpghuds.core.config.HudConfig;
@@ -50,7 +49,6 @@ public final class Main extends JavaPlugin {
 
         PaperCommandManager paperCommandManager = new PaperCommandManager(this);
         paperCommandManager.getCommandCompletions().registerCompletion("huds",c -> settings.getHudList().stream().map(HudConfig::getNamespaceId).toList());
-        paperCommandManager.registerCommand(new RPGCompassCommand(this));
         paperCommandManager.registerCommand(new RPGHudsCommand(this));
     }
 

@@ -2,12 +2,10 @@ package dev.lone.rpghuds.core;
 
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
-import dev.lone.rpghuds.core.config.CompassHudConfig;
 import dev.lone.rpghuds.core.config.HudConfig;
 import dev.lone.rpghuds.core.config.MoneyHudConfig;
 import dev.lone.rpghuds.core.data.*;
 import dev.lone.rpghuds.core.settings.MoneySettings;
-import dev.lone.rpghuds.core.settings.old.CompassSettingsOld;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
