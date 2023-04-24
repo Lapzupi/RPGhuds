@@ -111,8 +111,6 @@ public class RPGHuds {
 
             if (hud instanceof MoneyHud) {
                 playerData.registerHud(hud, false);
-            } else if (hud instanceof CompassHud) {
-                playerData.registerHud(hud, true);
             }
         }
         if (plugin.getSettings().isDebug()) {
@@ -133,16 +131,6 @@ public class RPGHuds {
                             moneyHudConfig.getWorlds(),
                             moneyHudConfig.getIcon(),
                             plugin.getSettings().getMoneyType(), plugin.getSettings().getMoneyType()));
-        }
-        if (hudConfig instanceof CompassHudConfig compassHudConfig) {
-            return new CompassHud(
-                    holder,
-                    new CompassSettingsOld(
-                            "rpghuds:compass",
-                            "rpghuds:hud_compass_",
-                            compassHudConfig.getOffset(),
-                            compassHudConfig.getWorlds()
-                    ));
         }
         throw new NullPointerException();
     }

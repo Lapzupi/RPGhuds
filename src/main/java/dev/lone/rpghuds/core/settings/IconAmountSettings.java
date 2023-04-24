@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 
-import static dev.lone.rpghuds.utils.ItemsAdderWrapper.getFontImage;
+import static dev.lone.rpghuds.utils.Utils.getFontImage;
 
 /**
  * @author sarhatabaot

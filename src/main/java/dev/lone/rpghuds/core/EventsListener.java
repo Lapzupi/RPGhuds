@@ -1,7 +1,7 @@
 package dev.lone.rpghuds.core;
 
 import dev.lone.rpghuds.Main;
-import dev.lone.rpghuds.utils.EventsUtil;
+import dev.lone.rpghuds.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -26,7 +26,7 @@ class EventsListener implements Listener {
     }
 
     public void registerListener() {
-        EventsUtil.registerEventOnce(this, plugin);
+        Utils.registerEventOnce(this, plugin);
         itemsAdderLoadListener.registerListener();
     }
 

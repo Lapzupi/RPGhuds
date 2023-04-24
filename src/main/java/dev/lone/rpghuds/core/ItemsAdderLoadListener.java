@@ -1,7 +1,7 @@
 package dev.lone.rpghuds.core;
 
 import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
-import dev.lone.rpghuds.utils.EventsUtil;
+import dev.lone.rpghuds.utils.Utils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -18,7 +18,7 @@ public class ItemsAdderLoadListener implements Listener {
     }
 
     public void registerListener() {
-        EventsUtil.registerEventOnce(this, plugin);
+        Utils.registerEventOnce(this, plugin);
     }
 
     @EventHandler
