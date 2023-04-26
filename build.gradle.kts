@@ -25,7 +25,8 @@ dependencies {
 
     implementation(libs.commands.paper)
     implementation(libs.lapzupi.config)
-
+    implementation(libs.lapzupi.files)
+    
     library(libs.configurate.yaml)
     library(libs.commons.io)
 }

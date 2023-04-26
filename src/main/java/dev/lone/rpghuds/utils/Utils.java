@@ -10,6 +10,10 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class Utils {
+    private Utils() {
+        throw new UnsupportedOperationException();
+    }
+    
     public static FontImageWrapper getFontImage(String id) throws NullPointerException {
         FontImageWrapper fontImageWrapper = new FontImageWrapper(id);
         if (!fontImageWrapper.exists())

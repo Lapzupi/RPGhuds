@@ -69,8 +69,9 @@ public final class Main extends JavaPlugin {
 
     private void initVaultEconomy() {
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp != null)
+        if (rsp != null) {
             econ = rsp.getProvider();
+        }
     }
 
     public void reloadPlugin() {

@@ -10,6 +10,7 @@ dependencyResolutionManagement {
             library("commands-paper", "co.aikar:acf-paper:0.5.1-SNAPSHOT")
             library("commons-io", "commons-io:commons-io:2.11.0")
             library("lapzupi-config","com.github.Lapzupi:LapzupiConfig:1.1.1")
+            library("lapzupi-files","com.github.Lapzupi:LapzupiFiles:1c7a837b53")
             library("configurate-yaml", "org.spongepowered:configurate-yaml:4.1.2")
         }
     }

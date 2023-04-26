@@ -50,7 +50,7 @@ class EventsListener implements Listener {
             return;
 
         if (plugin.getSettings().isDebug())
-            plugin.getLogger().log(Level.INFO, "RPGhuds - detected ItemsAdder unload...");
+            plugin.getLogger().info(() -> "Detected ItemsAdder unload...");
         
         HandlerList.unregisterAll(itemsAdderLoadListener);
         itemsAdderLoadListener = null;

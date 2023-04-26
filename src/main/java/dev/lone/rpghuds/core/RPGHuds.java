@@ -1,5 +1,6 @@
 package dev.lone.rpghuds.core;
 
+import dev.lapzupi.com.files.FileUtil;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.config.HudConfig;
@@ -23,8 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class RPGHuds {
     private static RPGHuds instance;
@@ -167,41 +166,24 @@ public class RPGHuds {
         datasByPlayer.clear();
         this.hudsNames = new ArrayList<>();
     }
-
-    //todo do something about this, we commonly use this at least in 2 plugins
+    //TODO test
     private void extractDefaultAssets() {
-        CodeSource src = Main.class.getProtectionDomain().getCodeSource();
-        if (src != null) {
-            File itemsAdderRoot = new File(plugin.getDataFolder().getParent() + "/ItemsAdder");
-
-            URL jar = src.getLocation();
-
-            try (ZipInputStream zip = new ZipInputStream(jar.openStream())) {
-                plugin.getLogger().info(ChatColor.AQUA + "Extracting assets...");
-                while (true) {
-                    ZipEntry entry = zip.getNextEntry();
-                    if (entry == null)
-                        break;
-                    String name = entry.getName();
-                    if (!entry.isDirectory() && name.startsWith("contents/")) {
-                        File dest = new File(itemsAdderRoot, name);
-                        if (!dest.exists()) {
-                            FileUtils.copyInputStreamToFile(plugin.getResource(name), dest);
-                            plugin.getLogger().info(() -> ChatColor.AQUA + "       - Extracted " + name);
-                            needsIaZip = true;
-                        }
-                    }
-                }
-                plugin.getLogger().info(ChatColor.GREEN + "DONE extracting assets!");
-
-            } catch (IOException e) {
-                plugin.getLogger().severe("        ERROR EXTRACTING assets! StackTrace:");
-                e.printStackTrace();
+        try {
+            final List<String> fileNames = FileUtil.Companion.getFileNamesInJar(Main.class.getProtectionDomain().getCodeSource(), e -> !e.isDirectory() && e.getName().startsWith("rpghuds/"));
+            final File contentsFolder = new File(plugin.getDataFolder(), "contents");
+            if(!fileNames.isEmpty()) {
+                needsIaZip = true;
             }
+            for(final String name: fileNames) {
+                FileUtil.Companion.saveFileFromJar(plugin, name, name, contentsFolder);
+            }
+        } catch (IOException e){
+            plugin.getLogger().severe(() -> "ERROR EXTRACTING assets! StackTrace:");
+            e.printStackTrace();
         }
-
         notifyIazip = needsIaZip;
-        if (needsIaZip)
+        if (needsIaZip) {
             plugin.getLogger().warning(WARNING);
+        }
     }
 }

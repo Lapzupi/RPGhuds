@@ -23,9 +23,7 @@ public class ItemsAdderLoadListener implements Listener {
 
     @EventHandler
     private void onItemsAdderLoadData(ItemsAdderLoadDataEvent e) {
-        plugin.getLogger().log(Level.INFO, "RPGhuds - ItemsAdder finished loading");
         rpgHuds.needsIaZip = false;
-
         rpgHuds.cleanup();
         rpgHuds.initAllPlayers();
     }
