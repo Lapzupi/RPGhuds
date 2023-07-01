@@ -21,7 +21,7 @@ public class MoneyHud extends PAPIHud<MoneySettings> {
     private String prevAmount;
 
     @Nullable
-    BukkitTask arrowRemoveSchedule;
+    private BukkitTask arrowRemoveSchedule;
     @Nullable
     private FontImageWrapper currentArrow;
 

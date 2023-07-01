@@ -1,11 +1,11 @@
 plugins {
     id("java")
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
+    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("com.github.johnrengelman.shadow") version "8.1.0"
 }
 
 group = "dev.lone"
-version = "1.3.1"
+version = "1.3.2"
 
 repositories {
     mavenCentral()
@@ -30,7 +30,6 @@ dependencies {
     library(libs.configurate.yaml)
     library(libs.commons.io)
 }
-
 
 bukkit {
     name = "LapzupiHuds"
