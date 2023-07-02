@@ -19,6 +19,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +176,7 @@ public class RPGHuds {
             final List<String> fileNames = FileUtil.Companion.getFileNamesInJar(Main.class.getProtectionDomain().getCodeSource(),
                     e -> !e.isDirectory() && e.getName().startsWith("rpghuds/")
             );
-            final File contentsFolder = new File(plugin.getDataFolder(), "contents");
+            final File contentsFolder = new File("plugins/ItemsAdder", "contents");
             if(!fileNames.isEmpty()) {
                 needsIaZip = true;
             }
@@ -180,8 +184,12 @@ public class RPGHuds {
                 String[] split = name.split("/");
                 String fileName = split[split.length - 1];
                 String path = name.replace(fileName, "");
+                //extract to ia folder
                 FileUtil.Companion.saveFileFromJar(plugin, path, fileName, contentsFolder);
             }
+
+            final File rpgHudsFolder = new File(plugin.getDataFolder(), "rpghuds");
+            Files.copy(rpgHudsFolder.toPath(), contentsFolder.toPath(), StandardCopyOption.ATOMIC_MOVE);
         } catch (IOException| IllegalArgumentException e){
             plugin.getLogger().severe(() -> "ERROR EXTRACTING assets! StackTrace:");
             e.printStackTrace();
@@ -191,4 +199,5 @@ public class RPGHuds {
             plugin.getLogger().warning(WARNING);
         }
     }
+
 }
