@@ -166,18 +166,23 @@ public class RPGHuds {
         datasByPlayer.clear();
         this.hudsNames = new ArrayList<>();
     }
-    //TODO test
+
     private void extractDefaultAssets() {
         try {
-            final List<String> fileNames = FileUtil.Companion.getFileNamesInJar(Main.class.getProtectionDomain().getCodeSource(), e -> !e.isDirectory() && e.getName().startsWith("rpghuds/"));
+            final List<String> fileNames = FileUtil.Companion.getFileNamesInJar(Main.class.getProtectionDomain().getCodeSource(),
+                    e -> !e.isDirectory() && e.getName().startsWith("rpghuds/")
+            );
             final File contentsFolder = new File(plugin.getDataFolder(), "contents");
             if(!fileNames.isEmpty()) {
                 needsIaZip = true;
             }
             for(final String name: fileNames) {
-                FileUtil.Companion.saveFileFromJar(plugin, name, name, contentsFolder);
+                String[] split = name.split("/");
+                String fileName = split[split.length - 1];
+                String path = name.replace(fileName, "");
+                FileUtil.Companion.saveFileFromJar(plugin, path, fileName, contentsFolder);
             }
-        } catch (IOException e){
+        } catch (IOException| IllegalArgumentException e){
             plugin.getLogger().severe(() -> "ERROR EXTRACTING assets! StackTrace:");
             e.printStackTrace();
         }
