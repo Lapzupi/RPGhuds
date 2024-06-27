@@ -6,8 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-import java.util.logging.Level;
-
 public class ItemsAdderLoadListener implements Listener {
     private final Plugin plugin;
     private final RPGHuds rpgHuds;

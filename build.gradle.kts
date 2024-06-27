@@ -1,21 +1,12 @@
 plugins {
     id("java")
-    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
-    id("com.github.johnrengelman.shadow") version "8.1.0"
+    alias(libs.plugins.plugin.yml.bukkit)
+    alias(libs.plugins.shadow)
 }
 
 group = "dev.lone"
-version = "1.3.2"
+version = "1.3.3"
 
-repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://oss.sonatype.org/content/groups/public/")
-    maven("https://repo.aikar.co/content/groups/aikar/")
-    maven("https://jitpack.io")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.codemc.io/repository/maven-public/")
-}
 
 dependencies {
     compileOnly(libs.paper.api)
@@ -39,7 +30,7 @@ bukkit {
     
     depend = listOf("ItemsAdder", "PlaceholderAPI")
     softDepend = listOf("Vault")
-    apiVersion = "1.19"
+    apiVersion = "1.20"
 }
 
 
@@ -57,12 +48,16 @@ tasks {
         
         archiveFileName.set("LapzupiHuds-${project.version}.jar")
         archiveClassifier.set("shadow")
+
+        relocate("co.aikar.commands", "dev.lone.rpghuds.acf")
+        relocate("co.aikar.locales", "dev.lone.rpghuds.locales")
     }
 }
 
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
+        vendor.set(JvmVendorSpec.ADOPTIUM)
     }
 }

@@ -40,7 +40,7 @@ public class PlayerData {
     private void refreshHuds(@NotNull List<Hud<?>> huds) {
         boolean changedRenderAny = false;
         for (Hud<?> hud : huds) {
-            if (hud.refreshRender() == Hud.RenderAction.SEND_REFRESH)
+            if (hud.refreshRender() == RenderAction.SEND_REFRESH)
                 changedRenderAny = true;
         }
 

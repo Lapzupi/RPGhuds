@@ -73,9 +73,4 @@ public abstract class Hud<T extends HudSettings> {
         customHudWrapper.setOffsetX(offset);
     }
 
-    enum RenderAction {
-        SEND_REFRESH,
-        SAME_AS_BEFORE,
-        HIDDEN
-    }
 }

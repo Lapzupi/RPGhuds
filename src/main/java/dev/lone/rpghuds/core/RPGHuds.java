@@ -1,29 +1,18 @@
 package dev.lone.rpghuds.core;
 
-import dev.lapzupi.com.files.FileUtil;
 import dev.lone.itemsadder.api.FontImages.PlayerHudsHolderWrapper;
 import dev.lone.rpghuds.Main;
 import dev.lone.rpghuds.core.config.HudConfig;
 import dev.lone.rpghuds.core.config.MoneyHudConfig;
 import dev.lone.rpghuds.core.data.*;
 import dev.lone.rpghuds.core.settings.MoneySettings;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +41,6 @@ public class RPGHuds {
         this.plugin = plugin;
 
         new EventsListener(plugin, this).registerListener();
-
-        extractDefaultAssets();
     }
 
     public static RPGHuds inst() {
@@ -91,7 +78,6 @@ public class RPGHuds {
         initHudNames();
     }
 
-    //todo compare this with config.yml to ensure huds are properly loaded.
     private void initHudNames() {
         this.hudsNames = plugin.getSettings().getHudList().stream().map(HudConfig::getNamespaceId).toList();
     }
@@ -170,34 +156,4 @@ public class RPGHuds {
         datasByPlayer.clear();
         this.hudsNames = new ArrayList<>();
     }
-
-    private void extractDefaultAssets() {
-        try {
-            final List<String> fileNames = FileUtil.Companion.getFileNamesInJar(Main.class.getProtectionDomain().getCodeSource(),
-                    e -> !e.isDirectory() && e.getName().startsWith("rpghuds/")
-            );
-            final File contentsFolder = new File("plugins/ItemsAdder", "contents");
-            if(!fileNames.isEmpty()) {
-                needsIaZip = true;
-            }
-            for(final String name: fileNames) {
-                String[] split = name.split("/");
-                String fileName = split[split.length - 1];
-                String path = name.replace(fileName, "");
-                //extract to ia folder
-                FileUtil.Companion.saveFileFromJar(plugin, path, fileName, contentsFolder);
-            }
-
-            final File rpgHudsFolder = new File(plugin.getDataFolder(), "rpghuds");
-            Files.copy(rpgHudsFolder.toPath(), contentsFolder.toPath(), StandardCopyOption.ATOMIC_MOVE);
-        } catch (IOException| IllegalArgumentException e){
-            plugin.getLogger().severe(() -> "ERROR EXTRACTING assets! StackTrace:");
-            e.printStackTrace();
-        }
-        notifyIazip = needsIaZip;
-        if (needsIaZip) {
-            plugin.getLogger().warning(WARNING);
-        }
-    }
-
 }
